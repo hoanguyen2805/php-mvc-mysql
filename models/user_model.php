@@ -14,9 +14,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 09h40
+     * Created at 05-05-2021 10h30
      * validate for form sign up
-     * XONG
      *
      */
     public function validateSignUp($fullName, $email, $username, $password, $birthDay)
@@ -25,11 +24,6 @@ class UserModel
         $err = "";
         if ($fullName == "") {
             $err = $err . "Full Name is required. ";
-            $check = false;
-        }
-        $regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $fullName);
-        if (!$regex) {
-            $err = $err . "The Full Name cannot contain special characters. ";
             $check = false;
         }
         if ($username == "") {
@@ -64,9 +58,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 8h30
+     * Created at 05-05-2021 10h50
      * sign up
-     * XONG
      *
      */
     public function signUp($fullName, $email, $username, $password, $birthDay)
@@ -93,9 +86,8 @@ class UserModel
     /**
      *
      * Hoa
-     * created at 22-04-2021 08h:40
+     * created at 05-05-2021 11h20
      * checking username exists
-     * XONG
      *
      */
     public function isUsernameExists($username)
@@ -108,9 +100,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 08h:50
+     * Created at 05-05-2021 11h40
      * checking email exists
-     * XONG
      *
      */
     public function isEmailExists($email)
@@ -123,9 +114,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 09h:10
+     * Created at 05-05-2021 13h:40
      * upload avatar to images folder
-     * XONG
      *
      */
     public function uploadAvatar()
@@ -181,13 +171,13 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 10h:40
-     * check account to sign in
-     * XONG
+     * Created at 05-05-2021 14h40
+     * sign in
      *
      */
     public function signIn($username, $password)
     {
+        //validate form SignIn
         if (trim($username) == "") {
             $_SESSION["signInNotify"] = "The username field is required!";
             return false;
@@ -196,6 +186,7 @@ class UserModel
             $_SESSION["signInNotify"] = "The password field is required!";
             return false;
         }
+
         $sql = "SELECT * FROM user WHERE username = '$username'";
         $this->db->setQuery($sql);
         $result = $this->db->loadRow();
@@ -218,9 +209,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 14h:30
+     * Created at 05-05-2021 16h:20
      * check email for sending
-     * XONG
      *
      */
     public function forgotPassword($email)
@@ -242,9 +232,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 15h:30
-     * send email by phpmailer - save email and token into file forgotPassword.txt if sending email successfully
-     * XONG
+     * Created at 05-05-2021 16h:40
+     * send email by phpmailer and save [token - email] into database
      *
      */
     public function sendEmail($email)
@@ -279,9 +268,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 22-04-2021 14h50
+     * Created at 05-05-2021 19h50
      * get user by email
-     * XONG
      *
      */
     public function getUserByEmail($email)
@@ -299,9 +287,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 21-04-2021 21h20
+     * Created at 05-05-2021 09h30
      * get user by username
-     * XONG
      *
      */
     public function getUserByUsername($username)
@@ -319,9 +306,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 23-04-2021 09h:20
+     * Created at 06-05-2021 09h:30
      * reset password
-     * XONG
      *
      */
     public function resetPassword($email, $token, $password)
@@ -349,9 +335,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 23-04-2021 09h:40
-     * checking Email and token exist - file forgotPassword
-     * XONG
+     * Created at 06-05-2021 09h:50
+     * checking Email and token exist on table recovery_code
      *
      */
     public function isEmailAndTokenExist($email, $token)
@@ -366,30 +351,12 @@ class UserModel
         return true;
     }
 
-    /**
-     *
-     * Hoa
-     * Created at 24-04-2021 10h00
-     * delete user by username
-     *
-     */
-    public function deleteUserById($id)
-    {
-        $sql = "DELETE FROM user WHERE id = $id";
-        $this->db->setQuery($sql);
-        $this->db->execute();
-
-        $sql_get_user = "SELECT * FROM user WHERE id = $id";
-        $this->db->setQuery($sql_get_user);
-        $user = $this->db->loadRow();
-        File::deleteImage(trim($user->avatar));
-    }
 
     /**
      *
      * Hoa
-     * Created at 24-04-2021 14h30
-     * xong
+     * Created at 06-05-2021 14h30
+     * count record in user table
      *
      */
     public function countRecord($key)
@@ -402,9 +369,8 @@ class UserModel
     /**
      *
      * Hoa
-     * Created at 24-04-2021 16h20
+     * Created at 06-05-2021 13h50
      * paginate with email | username
-     * xong
      *
      */
     public function paginate($page, $key)
@@ -423,4 +389,23 @@ class UserModel
         }
     }
 
+    /**
+     *
+     * Hoa
+     * Created at 06-05-2021 15h20
+     * delete user by id
+     *
+     */
+    public function deleteUserById($id)
+    {
+        //delete img
+        $sql_get_user = "SELECT * FROM user WHERE id = $id";
+        $this->db->setQuery($sql_get_user);
+        $user = $this->db->loadRow();
+        File::deleteImage(trim($user->avatar));
+        //delete user
+        $sql = "DELETE FROM user WHERE id = $id";
+        $this->db->setQuery($sql);
+        $this->db->execute();
+    }
 }

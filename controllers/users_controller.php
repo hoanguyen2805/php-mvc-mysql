@@ -14,9 +14,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 21-04-2021 21h00
-     * go to page index
-     * xong
+     * Created at 05-05-2021 09h00
+     * go to page user information
      *
      */
     public function info()
@@ -46,9 +45,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 21-04-2021 21h50
+     * Created at 05-05-2021 10h00
      * go to page error when user entered wrong path
-     * XONG
      *
      */
     public function error()
@@ -59,9 +57,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 08h00
+     * Created at 05-05-2021 10h10
      * go to page sign up
-     * XONG
      *
      */
     public function signUp()
@@ -82,9 +79,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 08h20
+     * Created at 05-05-2021 10h20
      * handling form sign up
-     * XONG
      *
      */
     public function signUpForm()
@@ -113,9 +109,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 10h00
+     * Created at 05-05-2021 14h00
      * go to page sign in
-     * XONG
      *
      */
     public function signIn()
@@ -137,9 +132,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 10h20
+     * Created at 05-05-2021 14h20
      * handling form sign in
-     * XONG
      *
      */
     public function signInForm()
@@ -166,9 +160,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 11h50
+     * Created at 05-05-2021 15h30
      * sign out then go to page sign in
-     * XONG
      *
      */
     public function signOut()
@@ -180,9 +173,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 13h40
+     * Created at 05-05-2021 15h40
      * go to page forgot password
-     * XONG
      *
      */
     public function forgotPassword()
@@ -203,9 +195,9 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 22-04-2021 14h00
+     * Created at 05-05-2021 16h00
      * handling form forgot password - send email
-     * XONG
+     *
      */
     public function forgotPasswordForm()
     {
@@ -227,9 +219,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 23-04-2021 08h20
+     * Created at 06-05-2021 08h20
      * go to page reset password
-     * XONG
      *
      */
     public function resetPassword()
@@ -253,9 +244,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 23-04-2021 08h50
+     * Created at 06-05-2021 08h50
      * handling form reset password
-     * XONG
      *
      */
     public function resetPasswordForm()
@@ -293,9 +283,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 24-04-2021 09h00
+     * Created at 06-05-2021 13h30
      * just admin can go to listUsers page
-     * XONG
      *
      */
     public function listUsers()
@@ -331,37 +320,8 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
-     * Created at 24-04-2021 09h50
-     * just admin can delete user
-     *
-     */
-    public function deleteUser()
-    {
-        if (isset($_SESSION['user'])) {
-            $role = $_SESSION["role"];
-            if ($role == 1) {
-                if (isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                    $this->userModel->deleteUserById($id);
-                }
-                header("location:index.php?controller=users&action=list-users");
-            } else {
-                echo "<script>
-                            alert('You are not permitted to use this feature!');
-                            window.location.href='index.php?controller=users';
-                      </script>";
-            }
-        } else {
-            header("location:index.php?controller=users&action=sign-in");
-        }
-    }
-
-    /**
-     *
-     * Hoa
-     * Created at 24-04-2021 13h40
+     * Created at 06-05-2021 14h50
      * handling form search username | email
-     * XONG
      *
      */
     public function formSearch()
@@ -385,6 +345,33 @@ class UsersController extends BaseController
         } else {
             header("location:index.php?controller=users&action=sign-in");
         }
+    }
 
+    /**
+     *
+     * Hoa
+     * Created at 06-05-2021 15h00
+     * just admin can delete user
+     *
+     */
+    public function deleteUser()
+    {
+        if (isset($_SESSION['user'])) {
+            $role = $_SESSION["role"];
+            if ($role == 1) {
+                if (isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                    $this->userModel->deleteUserById($id);
+                }
+                header("location:index.php?controller=users&action=list-users");
+            } else {
+                echo "<script>
+                            alert('You are not permitted to use this feature!');
+                            window.location.href='index.php?controller=users';
+                      </script>";
+            }
+        } else {
+            header("location:index.php?controller=users&action=sign-in");
+        }
     }
 }

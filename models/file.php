@@ -104,9 +104,10 @@ class File
     {
         if (file_exists($path)) {
             unlink($path);
-//            echo 'File ' . $path . ' has been deleted';
+            echo 'File ' . $path . ' has been deleted';
         } else {
-//            echo 'Could not delete ' . $path . ', file does not exist';
+
+            echo 'Could not delete ' . $path . ', file does not exist';
         }
     }
 }

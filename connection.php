@@ -12,7 +12,6 @@ class Database
     /**
      *
      * Hoa
-     * Create at
      * connect to database
      *
      */
@@ -31,19 +30,30 @@ class Database
     }
 
 
+    /**
+     *
+     * Hoa
+     * set sql query
+     *
+     */
     public function setQuery($sql)
     {
         $this->sql = $sql;
     }
 
-    //Function execute the query
+    /**
+     *
+     * Hoa
+     * execute the query - insert, update, delete
+     *
+     */
     public function execute($options = array())
     {
         // dùng prepared statement để tránh bị tấn công SQL Injection
         // prepare() tạo ra một Prepared Statement
         $statement = $this->connection->prepare($this->sql);
-        //neu co tham so
-        if ($options) {  //If have $options then system will be tranmission parameters
+        // nếu có tham số
+        if ($options) {
             for ($i = 0; $i < count($options); $i++) {
                 // truyền giá trị cho các tham số trong sql
                 $statement->bindParam($i + 1, $options[$i]);
@@ -54,7 +64,13 @@ class Database
         return $statement;
     }
 
-    //Funtion load datas on table
+    /**
+     *
+     * Hoa
+     * Funtion load datas on table
+     * return an array, if there is no record -> array = null or count(array) = 0
+     *
+     */
     public function loadAllRows($options = array())
     {
         // nếu không có tham số
@@ -76,9 +92,10 @@ class Database
 
     /**
      *
-     * Funtion load 1 data on the table
-     * không tìm thấy trả về false
-     * tìm thấy trả về 1 object của stdClass
+     * Hoa
+     * Function load a record on the table
+     * if not found, return false
+     * if found, return a object stdClass
      *
      */
     public function loadRow($option = array())
@@ -97,8 +114,10 @@ class Database
 
     /**
      *
+     * Hoa
      * Function count the record on the table
-     * trả về số bản ghi: select count(*) from ...
+     * select count(*) from ... where ...
+     *
      */
     public function loadRecord($option = array())
     {

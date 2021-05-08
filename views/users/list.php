@@ -9,6 +9,7 @@
 <div class="divTable blueTable">
     <div class="divTableHeading">
         <div class="divTableRow">
+            <div class="divTableHead">ID</div>
             <div class="divTableHead">Avatar</div>
             <div class="divTableHead">Full Name</div>
             <div class="divTableHead">Email</div>
@@ -23,6 +24,7 @@
             foreach ($users as $user) {
                 ?>
                 <div class="divTableRow">
+                    <div class="divTableCell"><?= $user->id ?></div>
                     <div class="divTableCell">
                         <img src="<?= $user->avatar ?>" alt="" width="30px">
                     </div>

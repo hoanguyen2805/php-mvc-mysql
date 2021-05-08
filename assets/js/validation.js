@@ -62,11 +62,6 @@ function validateFormSignUp() {
     }
 
     if (check) {
-        if (!regex.test(fullName)) {
-            alert("Please do not enter following special characters in the Full Name field");
-            check = false;
-            return check;
-        }
         if (!regex.test(username)) {
             alert("Please do not enter following special characters in the Username field");
             check = false;
