@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <h2 style="text-align: center; margin-top: 30px; color: red; font-size: 30px; font-weight: normal">Manage Users</h2>
 
 <form action="index.php?controller=users&action=form-search" method="post" class="example"
@@ -37,7 +38,10 @@
                         if ($user->isAdmin != 1) {
                             ?>
                             <a href="index.php?controller=users&action=delete-user&id=<?= $user->id ?>"
-                               onClick="return confirm('Are you sure you want to delete this user?');">DELETE</a>
+                               onClick="return confirm('Are you sure you want to delete this user?');"
+                               class="btn btn-danger">
+                                <i class="fa fa-trash"
+                                   aria-hidden="true"></i> DELETE</a>
                             <?php
                         }
                         ?>

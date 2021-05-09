@@ -3,11 +3,17 @@ require_once('models/file.php');
 
 class ProductModel
 {
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = new Database();
+    }
 
     /**
      *
      * Hoa
-     * Created at 26-04-2021 09h30
+     * Created at 07-05-2021 10h30
      * validate for form add product
      *
      */
@@ -17,11 +23,6 @@ class ProductModel
         $err = "";
         if ($name == "") {
             $err = $err . "Name is required. ";
-            $check = false;
-        }
-        $regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $name);
-        if (!$regex) {
-            $err = $err . "The name cannot contain special characters. ";
             $check = false;
         }
         if ($price == "" || !is_numeric($price)) {
@@ -46,7 +47,7 @@ class ProductModel
     /**
      *
      * Hoa
-     * Created at 26-04-2021 09h40
+     * Created at 07-05-2021 10h40
      * save product
      *
      */
@@ -60,7 +61,9 @@ class ProductModel
         if (!is_string($urlImage)) {
             return false;
         }
-        File::writeFile("assets/files/products.txt", "$name,$price,$category,$urlImage");
+        $sql = "INSERT INTO product (name, price, category_id, image) VALUE (?,?,?,?)";
+        $this->db->setQuery($sql);
+        $this->db->execute(array($name, $price, $category, $urlImage));
         $_SESSION["addProductNotify"] = "Added successfully!";
         return true;
     }
@@ -68,32 +71,21 @@ class ProductModel
     /**
      *
      * Hoa
-     * Created at 26-04-2021 10h00
+     * Created at 07-05-2021 11h00
      * checking name exists
      *
      */
     public function isNameExists($name)
     {
-        if (file_exists('assets/files/products.txt')) {
-            $file = fopen("assets/files/products.txt", "r");
-            while (!feof($file)) {
-                $arr = explode(",", fgets($file));
-                if ($arr[0] == $name) {
-                    fclose($file);
-                    return true;
-                }
-            }
-            fclose($file);
-            return false;
-        } else {
-            return false;
-        }
+        $sql = "SELECT * FROM product WHERE name = '$name'";
+        $this->db->setQuery($sql);
+        return $this->db->loadRow();
     }
 
     /**
      *
      * Hoa
-     * Created at 26-04-2021 09h:10
+     * Created at 07-05-2021 11h:10
      * upload image to images/products folder
      *
      */
@@ -151,31 +143,35 @@ class ProductModel
     /**
      *
      * Hoa
-     * Created at 26-04-2021 13h30
+     * Created at 07-05-2021 09h50
      * get categories
      *
      */
     public function getCategories()
     {
-        return File::getList('assets/files/categories.txt');
+        $sql = "SELECT * FROM category ORDER BY id ASC";
+        $this->db->setQuery($sql);
+        return $this->db->loadAllRows();
     }
 
     /**
      *
      * Hoa
-     * Created at 26-04-2021 14h00
-     * get list product
+     * Created at 07-05-2021 09h30
+     * count record on product table
      *
      */
-    public function getProducts()
+    public function countRecord()
     {
-        return File::getList('assets/files/products.txt');
+        $sql = "SELECT COUNT(*) FROM product";
+        $this->db->setQuery($sql);
+        return $this->db->loadRecord();
     }
 
     /**
      *
      * Hoa
-     * Created at 26-04-2021 15h00
+     * Created at 07-05-2021 09h00
      * paginate product
      *
      */
@@ -185,68 +181,41 @@ class ProductModel
             $page = 1;
         }
         $index = ($page - 1) * 5;
-        $products = $this->getProducts();
+        $sql = "SELECT * FROM product LIMIT $index, 5";
+        $this->db->setQuery($sql);
+        $products = $this->db->loadAllRows();
         if ($products == null) {
             return null;
         } else {
-            return array_slice($products, $index, 5);
+            return $products;
         }
     }
 
     /**
      *
      * Hoa
-     * Created at 27-04-2021 08h30
-     * delete product by name
+     * Created at 07-05-2021 13h50
+     * delete product by id
      *
      */
-    public function deleteProductByName($name)
+    public function deleteProductById($id)
     {
-        $product = $this->getProductByName($name);
-        if ($product != null) {
-            $list = $this->getProducts();
-            $size = count($list);
-            $index = 0;
-            foreach ($list as $item) {
-                if (trim($item[0]) == $name) {
-                    break;
-                }
-                $index++;
-            }
-            File::deleteLine('assets/files/products.txt', $product, $index, $size);
-            File::deleteImage(trim($product[3]));
-        }
+        //delete image
+        $sql_get_product = "SELECT * FROM product WHERE id = $id";
+        $this->db->setQuery($sql_get_product);
+        $product = $this->db->loadRow();
+        File::deleteImage(trim($product->image));
+
+        // delete product
+        $sql = "DELETE FROM product WHERE id = $id";
+        $this->db->setQuery($sql);
+        $this->db->execute();
     }
 
     /**
      *
      * Hoa
-     * Created at 27-04-2021 08h40
-     * get product by name
-     *
-     */
-    public function getProductByName($name)
-    {
-        if (file_exists('assets/files/products.txt')) {
-            $file = fopen("assets/files/products.txt", "r");
-            while (!feof($file)) {
-                $arr = explode(",", fgets($file));
-                if ($arr[0] == $name) {
-                    fclose($file);
-                    return $arr;
-                }
-            }
-            fclose($file);
-            return null;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * Hoa
-     * Created at 27-04-2021 15h10
+     * Created at 07-05-2021 14h30
      * validate for form update
      *
      */
@@ -258,11 +227,11 @@ class ProductModel
             $err = $err . "Name is required. ";
             $check = false;
         }
-        $regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $name);
+        /*$regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $name);
         if (!$regex) {
             $err = $err . "The name cannot contain special characters. ";
             $check = false;
-        }
+        }*/
         if ($price == "" || !is_numeric($price)) {
             $err = $err . "Price is required. ";
             $check = false;
@@ -285,44 +254,58 @@ class ProductModel
     /**
      *
      * Hoa
-     * Created at 27-04-2021 15h20
+     * Created at 07-05-2021 14h40
      * update product
      *
      */
-    public function updateProduct($name, $price, $category, $oldNameProduct)
+    public function updateProduct($newName, $price, $category, $oldName)
     {
-        echo "$name, $price, $category, ten cu: $oldNameProduct";
-        $oldProduct = $this->getProductByName($oldNameProduct);
-        $newProduct = $oldProduct;
-        $newProduct[0] = $name;
-        $newProduct[1] = $price;
-        $newProduct[2] = $category;
-        if ($this->isNewNameExists($name, $oldNameProduct)) {
+        if ($this->isNewNameExists($newName, $oldName)) {
             $_SESSION["updateProductNotify"] = "New Name is already taken!";
             return false;
         }
+        $sql = "SELECT * FROM product WHERE name = '$oldName'";
+        $this->db->setQuery($sql);
+        $product = $this->db->loadRow();
         if ($_FILES['image']['name'] == "") {
-            //not delete img
-            File::updateLine("assets/files/products.txt", $oldProduct, $newProduct);
+            // khong update image
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category WHERE id = $product->id";
+            $this->db->setQuery($sql_update);
+            $this->db->execute();
         } else {
-            //đelete img and update img
+            //update img - delete img
             $urlImage = $this->updateImage();
             if (!is_string($urlImage)) {
                 return false;
             }
             $newProduct[3] = $urlImage;
-            File::updateLine("assets/files/products.txt", $oldProduct, $newProduct);
-            File::deleteImage(trim($oldProduct[3]));
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category, image = '$urlImage' WHERE id = $product->id";
+            $this->db->setQuery($sql_update);
+            $this->db->execute();
+            File::deleteImage(trim($product->image));
         }
         $_SESSION["updateProductNotify"] = "updated successfully";
         return true;
     }
 
+    /**
+     *
+     * Hoa
+     * Created at 07-05-2021 15h10
+     * checking new name exists
+     *
+     */
+    public function isNewNameExists($newName, $oldName)
+    {
+        $sql = "SELECT * FROM product WHERE name = '$newName' AND name != '$oldName'";
+        $this->db->setQuery($sql);
+        return $this->db->loadRow();
+    }
 
     /**
      *
      * Hoa
-     * Created at 27-04-2021 16h:00
+     * Created at 07-05-2021 15h:30
      * update image
      *
      */
@@ -376,31 +359,5 @@ class ProductModel
         }
     }
 
-    /**
-     *
-     * Hoa
-     * Created at 27-04-2021 16h20
-     * checking new name exists
-     *
-     */
-    public function isNewNameExists($newName, $oldName)
-    {
-        if (file_exists('assets/files/products.txt')) {
-            $file = fopen("assets/files/products.txt", "r");
-            while (!feof($file)) {
-                $arr = explode(",", fgets($file));
-                if ($arr[0] == $oldName) {
-                    continue;
-                }
-                if ($arr[0] == $newName) {
-                    fclose($file);
-                    return true;
-                }
-            }
-            fclose($file);
-            return false;
-        } else {
-            return false;
-        }
-    }
+
 }

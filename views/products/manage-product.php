@@ -11,6 +11,7 @@ if (isset($notify)) {
 <div class="divTable blueTable">
     <div class="divTableHeading">
         <div class="divTableRow">
+            <div class="divTableHead">ID</div>
             <div class="divTableHead">Image</div>
             <div class="divTableHead">Name</div>
             <div class="divTableHead">Price</div>
@@ -25,23 +26,26 @@ if (isset($notify)) {
                 ?>
                 <div class="divTableRow">
                     <div class="divTableCell">
-                        <img src="<?= $product[3] ?>" alt="" width="60px">
+                        <?= $product->id ?>
                     </div>
-                    <div class="divTableCell"><?= $product[0] ?></div>
                     <div class="divTableCell">
-                        <?= number_format("$product[1]", 0, ",", " ") ?> đ
+                        <img src="<?= $product->image ?>" alt="" width="60px">
+                    </div>
+                    <div class="divTableCell"><?= $product->name ?></div>
+                    <div class="divTableCell">
+                        <?= number_format("$product->price", 0, ",", " ") ?> đ
                     </div>
                     <?php
                     foreach ($categories as $category) {
-                        if ($category[0] == $product[2]) {
+                        if ($category->id == $product->category_id) {
                             ?>
-                            <div class="divTableCell"><?= $category[1] ?></div>
+                            <div class="divTableCell"><?= $category->name ?></div>
                             <?php
                         }
                     }
                     ?>
                     <div class="divTableCell">
-                        <a href="index.php?controller=products&action=delete&name=<?= $product[0] ?>"
+                        <a href="index.php?controller=products&action=delete&id=<?= $product->id ?>"
                            onClick="return confirm('Are you sure you want to delete this product?');"
                            class="btn btn-danger">
                             <i class="fa fa-trash"
@@ -51,13 +55,11 @@ if (isset($notify)) {
                         <!--                        <a href="index.php?controller=products&action=update&name=-->
                         <?//= $product[0]?><!--">UPDATE</a>-->
                         <button class="btn btn-warning" data-toggle="modal" type="button"
-                                data-target="#update_modal_<?php
-                                $arrName = explode(" ", $product[0]);
-                                echo implode("", $arrName);
-                                ?>"><span
+                                data-target="#update_modal_<?= $product->id ?>"><span
                                     class="glyphicon glyphicon-edit"></span> Edit
                         </button>
                     </div>
+
                 </div>
                 <?php
                 include 'views/products/update.php';

@@ -13,7 +13,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 26-04-2021 08h:30
+     * Created at 07-05-2021 08h:30
      * go to page home
      *
      */
@@ -26,7 +26,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 26-04-2021 08h30
+     * Created at 07-05-2021 08h40
      * go to page manage product
      *
      */
@@ -40,10 +40,7 @@ class ProductsController extends BaseController
                     $page = $_GET['page'];
                 }
                 $products = $this->productModel->paginate($page);
-                $size = 0;
-                if ($this->productModel->getProducts() != null) {
-                    $size = count($this->productModel->getProducts());
-                }
+                $size = $this->productModel->countRecord();
                 $categories = $this->productModel->getCategories();
                 $totalPages = ceil($size / 5);
                 // thong bao cho update
@@ -76,7 +73,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 26-04-2021 08h40
+     * Created at 07-05-2021 10h10
      * go to page add product
      *
      */
@@ -107,7 +104,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 26-04-2021 09h00
+     * Created at 07-05-2021 10h20
      * handling form add product
      *
      */
@@ -146,7 +143,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 27-04-2021 08h20
+     * Created at 07-05-2021 13h40
      * just admin can delete product
      *
      */
@@ -155,9 +152,9 @@ class ProductsController extends BaseController
         if (isset($_SESSION['user'])) {
             $role = $_SESSION["role"];
             if ($role == 1) {
-                if (isset($_GET['name'])) {
-                    $name = trim($_GET['name']);
-                    $this->productModel->deleteProductByName($name);
+                if (isset($_GET['id'])) {
+                    $id = trim($_GET['id']);
+                    $this->productModel->deleteProductById($id);
                 }
                 header("location:index.php?controller=products&action=manage-product");
             } else {
@@ -175,7 +172,7 @@ class ProductsController extends BaseController
     /**
      *
      * Hoa
-     * Created at 27-04-2021 14h40
+     * Created at 07-05-2021 14h20
      * handling form update product
      *
      */

@@ -1,7 +1,4 @@
-<div class="modal fade" id="update_modal_<?php
-$arrName = explode(" ", $product[0]);
-echo implode("", $arrName);
-?>" aria-hidden="true">
+<div class="modal fade" id="update_modal_<?= $product->id ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <?php
@@ -9,7 +6,7 @@ echo implode("", $arrName);
                 echo "<h3 class='sign-up-error'>" . $notify . "</h3>";
             }
             ?>
-            <form action="index.php?controller=products&action=update-product-form&old=<?= $product[0] ?>"
+            <form action="index.php?controller=products&action=update-product-form&old=<?= $product->name ?>"
                   class="signup-form"
                   autocomplete="off"
                   method="post"
@@ -26,7 +23,7 @@ echo implode("", $arrName);
                         <div class="form-group">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-input" id="name" placeholder="Eg: iphone 11" name="name"
-                                   value="<?= $product[0] ?>">
+                                   value="<?= $product->name ?>">
                             <p class="error" id="err_name_product">Name is required!</p>
                         </div>
 
@@ -34,7 +31,7 @@ echo implode("", $arrName);
                             <label for="price" class="form-label">Price</label>
                             <input type="number" class="form-input" id="price" placeholder="Eg: 50000" name="price"
                                    step="0.01" min="0"
-                                   value="<?= $product[1] ?>">
+                                   value="<?= $product->price ?>">
                             <p class="error" id="err_price_product">Price is required!</p>
                         </div>
 
@@ -43,10 +40,10 @@ echo implode("", $arrName);
                             <select name="category" id="category" class="form-input">
                                 <?php
                                 foreach ($categories as $category) {
-                                    if ($product[2] == $category[0]) {
-                                        echo "<option value='$category[0]' selected>$category[1]</option>";
+                                    if ($product->category_id == $category->id) {
+                                        echo "<option value='$category->id' selected>$category->name</option>";
                                     } else {
-                                        echo "<option value='$category[0]'>$category[1]</option>";
+                                        echo "<option value='$category->id'>$category->name</option>";
                                     }
                                 }
                                 ?>
@@ -60,7 +57,7 @@ echo implode("", $arrName);
                                    onchange="PreviewImage();">
                             <p class="error" id="err_image_product">Image is required!</p>
                         </div>
-                        <img id="uploadPreview" style="width: 100px; height: 100px;" src="<?= $product[3] ?>"/>
+                        <img id="uploadPreview" style="width: 100px; height: 100px;" src="<?= $product->image ?>"/>
 
                         <!-- END -->
                     </div>
@@ -68,7 +65,7 @@ echo implode("", $arrName);
                 <div style="clear:both;"></div>
                 <div class="modal-footer">
                     <button name="updateProduct" class="btn btn-warning" type="submit">
-                        <span class="glyphicon glyphicon-edit" ></span> Update
+                        <span class="glyphicon glyphicon-edit"></span> Update
                     </button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">
                         <span class="glyphicon glyphicon-remove"></span> Close

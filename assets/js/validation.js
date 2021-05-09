@@ -176,7 +176,7 @@ function validateFormAddProduct() {
     let price = document.forms["formAddProduct"]["price"].value;
     let category = document.forms["formAddProduct"]["category"].value;
     let img = document.forms["formAddProduct"]["image"].value;
-    let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
+    // let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
     let check = true;
     if (name == "" || name == null) {
         document.getElementById("err_name_product").style.display = "block";
@@ -207,13 +207,13 @@ function validateFormAddProduct() {
     if (check == false) {
         return check;
     }
-    if (check) {
-        if (!regex.test(name)) {
-            alert("Please do not enter following special characters in the name field");
-            check = false;
-            return check;
-        }
-    }
+    // if (check) {
+    //     if (!regex.test(name)) {
+    //         alert("Please do not enter following special characters in the name field");
+    //         check = false;
+    //         return check;
+    //     }
+    // }
 }
 
 
@@ -228,7 +228,7 @@ function validateFormUpdateProduct() {
     let name = document.forms["formUpdateProduct"]["name"].value;
     let price = document.forms["formUpdateProduct"]["price"].value;
     let category = document.forms["formUpdateProduct"]["category"].value;
-    let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
+    // let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
     let check = true;
     if (name == "" || name == null) {
         document.getElementById("err_name_product").style.display = "block";
@@ -252,11 +252,11 @@ function validateFormUpdateProduct() {
     if (check == false) {
         return check;
     }
-    if (check) {
-        if (!regex.test(name)) {
-            alert("Please do not enter following special characters in the name field");
-            check = false;
-            return check;
-        }
-    }
+    // if (check) {
+    //     if (!regex.test(name)) {
+    //         alert("Please do not enter following special characters in the name field");
+    //         check = false;
+    //         return check;
+    //     }
+    // }
 }
