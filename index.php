@@ -3,7 +3,7 @@ require_once('connection.php');
 
 /**
  *
- * kiểm tra nếu tồn tại tham số controller thì get giá trị ra, không có thì gán mặc định controller = products, action = index
+ * kiểm tra nếu tồn tại tham số controller thì get giá trị ra, không có thì gán mặc định controller = user, action = index
  * lấy ra được controller thì kiểm tra nếu có action thì get tiếp action, không có thì gán action mặc định là index
  *
  */
