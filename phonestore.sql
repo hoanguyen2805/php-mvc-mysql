@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 09, 2021 lúc 01:14 PM
+-- Thời gian đã tạo: Th5 17, 2021 lúc 05:31 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.3
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
@@ -37,7 +37,7 @@ CREATE TABLE `category` (
 -- Đang đổ dữ liệu cho bảng `category`
 --
 
-INSERT INTO `category` (`id`, `name`) VALUES
+INSERT INTO `category` (`category_id`, `name`) VALUES
 (3, 'laptop'),
 (1, 'phone'),
 (2, 'tablet');
@@ -49,7 +49,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `price` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `product` (
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `price`, `category_id`, `image`) VALUES
+INSERT INTO `product` (`product_id`, `name`, `price`, `category_id`, `image`) VALUES
 (1, 'acer aspire a7', 19000000, 3, 'assets/images/products/161962375460897f4a4da2f.jpg'),
 (2, 'apple macbook air 2017', 18000000, 3, 'assets/images/products/161962378060897f6397d55.jpg'),
 (3, 'macbook pro 2020 m1', 38000000, 3, 'assets/images/products/161962384660897fa58e1ba.jpg'),
@@ -96,30 +96,30 @@ CREATE TABLE `recovery_code` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `fullName` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `full_name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `username` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
-  `birthDay` date NOT NULL,
+  `birth_day` date NOT NULL,
   `avatar` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL
+  `is_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `fullName`, `email`, `username`, `password`, `birthDay`, `avatar`, `isAdmin`) VALUES
+INSERT INTO `user` (`user_id`, `full_name`, `email`, `username`, `password`, `birth_day`, `avatar`, `is_admin`) VALUES
 (1, 'ADMINISTRATOR', 'admin@gmail.com', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-10', 'assets/images/users/161959406160890b4d26385.png', 1),
-(2, 'Tạ Bá Phú', 'nhocconmoilon1995@gmail.com', 'baphu', 'fbade9e36a3f36d3d676c1b808451dd7', '2021-04-14', 'assets/images/users/161959409360890b6d06ddd.png', 0),
+(2, 'Tạ Bá Phú', 'nhocconmoilon1995@gmail.com', 'baphu', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-14', 'assets/images/users/161959409360890b6d06ddd.png', 0),
 (3, 'Nguyễn Văn Hòa', 'hoanguyen280598@gmail.com', 'vanhoa', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-20', 'assets/images/users/161959412260890b89bfa15.png', 0),
 (4, 'Đặng Văn Bảo Hưng', 'vanhoa280598@gmail.com', 'baohung', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-16', 'assets/images/users/161959415460890baa45291.png', 0),
 (5, 'Huỳnh Anh Tuấn', 'hoanguyen98.nta@gmail.com', 'anhtuan', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-09', 'assets/images/users/161959419360890bd0ceaac.png', 0),
 (6, 'Trương Thị Mỹ Trinh', 'mytrinh@gmail.com', 'mytrinh', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-10', 'assets/images/users/161959423060890bf593a58.png', 0),
 (7, 'Nguyễn Văn Bình', 'vanbinh@gmail.com', 'vanbinh', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-07', 'assets/images/users/161959424960890c0954c44.png', 0),
 (8, 'Trần Quang Duy', 'onlylight0209@gmail.com', 'quangduy', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-13', 'assets/images/users/161959438960890c950c245.png', 0),
-(9, 'Võ Nguyễn Hoàng Phi', 'hoangphi@gmail.com', 'hoangphi', '81dc9bdb52d04dc20036dbd8313ed055', '2021-04-14', 'assets/images/users/161959442260890cb5cbf6c.png', 0),
+(9, 'Vo Nguyen Hoang Phi', 'hoangphi@gmail.com', 'hoangphi', '81dc9bdb52d04dc20036dbd8313ed055', '2021-05-07', 'assets/images/users/162122140860a1e01fa6b94.png', 0),
 (10, 'Trần Cẩm Nga', 'ngatran@gmail.com', 'camnga98', '81dc9bdb52d04dc20036dbd8313ed055', '2021-05-19', 'assets/images/users/162047995060968fce01b64.png', 0),
 (11, 'Đoàn Thị Bảo Linh', 'baolinh@gmail.com', 'linhdoan', '81dc9bdb52d04dc20036dbd8313ed055', '2021-05-12', 'assets/images/users/162047997960968feb12f4e.png', 0),
 (12, 'Ung Thị Thùy Oanh', 'thuyoanh@gmail.com', 'oanhthuy', '81dc9bdb52d04dc20036dbd8313ed055', '2021-05-13', 'assets/images/users/16204800106096900a0f580.png', 0),
@@ -133,14 +133,14 @@ INSERT INTO `user` (`id`, `fullName`, `email`, `username`, `password`, `birthDay
 -- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`category_id`),
   ADD UNIQUE KEY `unique_name_category` (`name`);
 
 --
 -- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`product_id`),
   ADD KEY `fk_product_category` (`category_id`);
 
 --
@@ -153,7 +153,7 @@ ALTER TABLE `recovery_code`
 -- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `unique_username_user` (`username`) USING BTREE,
   ADD UNIQUE KEY `unique_email_user` (`email`) USING BTREE;
 
@@ -165,19 +165,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -187,7 +187,7 @@ ALTER TABLE `user`
 -- Các ràng buộc cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

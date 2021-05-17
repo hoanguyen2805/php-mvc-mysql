@@ -1,4 +1,4 @@
-<div class="modal fade" id="update_modal_<?= $product->id ?>" aria-hidden="true">
+<div class="modal fade" id="update_modal_<?= $product->product_id ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <?php
@@ -40,10 +40,10 @@
                             <select name="category" id="category" class="form-input">
                                 <?php
                                 foreach ($categories as $category) {
-                                    if ($product->category_id == $category->id) {
-                                        echo "<option value='$category->id' selected>$category->name</option>";
+                                    if ($product->category_id == $category->category_id) {
+                                        echo "<option value='$category->category_id' selected>$category->name</option>";
                                     } else {
-                                        echo "<option value='$category->id'>$category->name</option>";
+                                        echo "<option value='$category->category_id'>$category->name</option>";
                                     }
                                 }
                                 ?>

@@ -149,7 +149,7 @@ class ProductModel
      */
     public function getCategories()
     {
-        $sql = "SELECT * FROM category ORDER BY id ASC";
+        $sql = "SELECT * FROM category ORDER BY category_id ASC";
         $this->db->setQuery($sql);
         return $this->db->loadAllRows();
     }
@@ -181,7 +181,8 @@ class ProductModel
             $page = 1;
         }
         $index = ($page - 1) * 5;
-        $sql = "SELECT * FROM product LIMIT $index, 5";
+        $sql = "SELECT product.*, category.name AS category_name FROM product 
+        INNER JOIN category ON product.category_id = category.category_id LIMIT $index, 5";
         $this->db->setQuery($sql);
         $products = $this->db->loadAllRows();
         if ($products == null) {
@@ -201,13 +202,13 @@ class ProductModel
     public function deleteProductById($id)
     {
         //delete image
-        $sql_get_product = "SELECT * FROM product WHERE id = $id";
+        $sql_get_product = "SELECT * FROM product WHERE product_id = $id";
         $this->db->setQuery($sql_get_product);
         $product = $this->db->loadRow();
         File::deleteImage(trim($product->image));
 
         // delete product
-        $sql = "DELETE FROM product WHERE id = $id";
+        $sql = "DELETE FROM product WHERE product_id = $id";
         $this->db->setQuery($sql);
         $this->db->execute();
     }
@@ -269,7 +270,7 @@ class ProductModel
         $product = $this->db->loadRow();
         if ($_FILES['image']['name'] == "") {
             // khong update image
-            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category WHERE id = $product->id";
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category WHERE product_id = $product->id";
             $this->db->setQuery($sql_update);
             $this->db->execute();
         } else {
@@ -279,7 +280,7 @@ class ProductModel
                 return false;
             }
             $newProduct[3] = $urlImage;
-            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category, image = '$urlImage' WHERE id = $product->id";
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category, image = '$urlImage' WHERE product_id = $product->id";
             $this->db->setQuery($sql_update);
             $this->db->execute();
             File::deleteImage(trim($product->image));

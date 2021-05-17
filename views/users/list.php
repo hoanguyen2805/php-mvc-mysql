@@ -25,19 +25,19 @@
             foreach ($users as $user) {
                 ?>
                 <div class="divTableRow">
-                    <div class="divTableCell"><?= $user->id ?></div>
+                    <div class="divTableCell"><?= $user->user_id ?></div>
                     <div class="divTableCell">
                         <img src="<?= $user->avatar ?>" alt="" width="30px">
                     </div>
-                    <div class="divTableCell"><?= $user->fullName ?></div>
+                    <div class="divTableCell"><?= $user->full_name ?></div>
                     <div class="divTableCell"><?= $user->email ?></div>
                     <div class="divTableCell"><?= $user->username ?></div>
-                    <div class="divTableCell"><?= $user->birthDay ?></div>
+                    <div class="divTableCell"><?= $user->birth_day ?></div>
                     <div class="divTableCell">
                         <?php
-                        if ($user->isAdmin != 1) {
+                        if ($user->is_admin != 1) {
                             ?>
-                            <a href="index.php?controller=users&action=delete-user&id=<?= $user->id ?>"
+                            <a href="index.php?controller=users&action=delete-user&id=<?= $user->user_id ?>"
                                onClick="return confirm('Are you sure you want to delete this user?');"
                                class="btn btn-danger">
                                 <i class="fa fa-trash"

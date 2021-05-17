@@ -26,7 +26,7 @@ if (isset($notify)) {
                 ?>
                 <div class="divTableRow">
                     <div class="divTableCell">
-                        <?= $product->id ?>
+                        <?= $product->product_id ?>
                     </div>
                     <div class="divTableCell">
                         <img src="<?= $product->image ?>" alt="" width="60px">
@@ -35,17 +35,9 @@ if (isset($notify)) {
                     <div class="divTableCell">
                         <?= number_format("$product->price", 0, ",", " ") ?> đ
                     </div>
-                    <?php
-                    foreach ($categories as $category) {
-                        if ($category->id == $product->category_id) {
-                            ?>
-                            <div class="divTableCell"><?= $category->name ?></div>
-                            <?php
-                        }
-                    }
-                    ?>
+                    <div class="divTableCell"><?= $product->category_name ?></div>
                     <div class="divTableCell">
-                        <a href="index.php?controller=products&action=delete&id=<?= $product->id ?>"
+                        <a href="index.php?controller=products&action=delete&id=<?= $product->product_id ?>"
                            onClick="return confirm('Are you sure you want to delete this product?');"
                            class="btn btn-danger">
                             <i class="fa fa-trash"
@@ -55,7 +47,7 @@ if (isset($notify)) {
                         <!--                        <a href="index.php?controller=products&action=update&name=-->
                         <?//= $product[0]?><!--">UPDATE</a>-->
                         <button class="btn btn-warning" data-toggle="modal" type="button"
-                                data-target="#update_modal_<?= $product->id ?>"><span
+                                data-target="#update_modal_<?= $product->product_id ?>"><span
                                     class="glyphicon glyphicon-edit"></span> Edit
                         </button>
                     </div>

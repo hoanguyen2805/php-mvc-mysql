@@ -27,13 +27,13 @@ class UsersController extends BaseController
                 header("location:index.php?controller=users&action=sign-in");
             } else {
                 $data = array(
-                    'fullName' => $user->fullName,
+                    'full_name' => $user->full_name,
                     'email' => $user->email,
                     'username' => $user->username,
                     'password' => $user->password,
-                    'birthDay' => $user->birthDay,
-                    'urlAvatar' => $user->avatar,
-                    'role' => $user->isAdmin
+                    'birth_day' => $user->birth_day,
+                    'avatar' => $user->avatar,
+                    'is_admin' => $user->is_admin
                 );
                 $this->render('info', $data);
             }

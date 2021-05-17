@@ -76,7 +76,7 @@ class UserModel
         if (!is_string($urlAvatar)) {
             return false;
         }
-        $sql = "INSERT INTO user (fullName, email, username, password, birthDay, avatar, isAdmin) VALUE (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO user (full_name, email, username, password, birth_day, avatar, is_admin) VALUE (?,?,?,?,?,?,?)";
         $this->db->setQuery($sql);
         $this->db->execute(array($fullName, $email, $username, $password, $birthDay, $urlAvatar, false));
         $_SESSION["signUpNotify"] = "Registered successfully, please login!";
@@ -198,9 +198,9 @@ class UserModel
             $_SESSION["signInNotify"] = "Password is incorrect!";
             return false;
         } else {
-            $_SESSION["id"] = $result->id;
+            $_SESSION["id"] = $result->user_id;
             $_SESSION["user"] = $username;
-            $_SESSION["role"] = $result->isAdmin;
+            $_SESSION["role"] = $result->is_admin;
             return true;
         }
 
@@ -249,12 +249,12 @@ class UserModel
         $link = "<a href='http://localhost:8081/php-mvc-mysql/index.php?controller=users&action=reset-password&key="
             . $email . "&token=" . $token . "'>Click To Reset Your Password!</a>";
         $title = 'Reset Your Password!';     //chủ đề
-        $content = "<h3> Dear " . $user->fullName . "</h3>";
+        $content = "<h3> Dear " . $user->full_name . "</h3>";
         $content .= "<p>We have received a request to re-issue your password recently.</p>";
         $content .= "<p>Please click on the following link to reset your password.</p>";
         $content .= "<b>$link</b>";
         $send = new SendMail();
-        $sendMai = $send->send($title, $content, $user->fullName, $email);
+        $sendMai = $send->send($title, $content, $user->full_name, $email);
         if ($sendMai) {
             $sql = "INSERT INTO recovery_code (email, token) VALUE (?,?)";
             $this->db->setQuery($sql);
@@ -317,7 +317,7 @@ class UserModel
                 $user = $this->getUserByEmail($email);
                 $user->password = $password;
                 //update password
-                $sql = "UPDATE user SET password = '$user->password' WHERE id = $user->id";
+                $sql = "UPDATE user SET password = '$user->password' WHERE user_id = $user->id";
                 $this->db->setQuery($sql);
                 $this->db->execute();
                 //delete token
@@ -399,12 +399,12 @@ class UserModel
     public function deleteUserById($id)
     {
         //delete img
-        $sql_get_user = "SELECT * FROM user WHERE id = $id";
+        $sql_get_user = "SELECT * FROM user WHERE user_id = $id";
         $this->db->setQuery($sql_get_user);
         $user = $this->db->loadRow();
         File::deleteImage(trim($user->avatar));
         //delete user
-        $sql = "DELETE FROM user WHERE id = $id";
+        $sql = "DELETE FROM user WHERE user_id = $id";
         $this->db->setQuery($sql);
         $this->db->execute();
     }
