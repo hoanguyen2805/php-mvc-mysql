@@ -57,7 +57,7 @@ class ProductsController extends BaseController
                 if (trim($notify) != "") {
                     $data['notify'] = $notify;
                 }
-                $this->render('manage-product', $data);
+                $this->render('manage_product', $data);
             } else {
                 echo "<script>
                             alert('You are not permitted to use this feature!');
@@ -113,7 +113,7 @@ class ProductsController extends BaseController
         if (isset($_SESSION['user'])) {
             $role = $_SESSION["role"];
             if ($role == 1) {
-                if (isset($_POST['addProduct'])) {
+                if (isset($_POST['add_product'])) {
                     $name = trim($_POST['name']);
                     $price = trim($_POST['price']);
                     $category = trim($_POST['category']);
@@ -181,7 +181,7 @@ class ProductsController extends BaseController
         if (isset($_SESSION['user'])) {
             $role = $_SESSION["role"];
             if ($role == 1) {
-                if (isset($_POST['updateProduct']) && isset($_GET['old'])) {
+                if (isset($_POST['update_product']) && isset($_GET['old'])) {
                     $name = trim($_POST['name']);
                     $price = trim($_POST['price']);
                     $category = trim($_POST['category']);

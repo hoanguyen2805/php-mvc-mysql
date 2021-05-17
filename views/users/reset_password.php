@@ -15,12 +15,12 @@ if (isset($_GET['token'])) {
 <form class="login-form" autocomplete="off"
       action="index.php?controller=users&action=reset-password-form&key=<?= $key ?>&token=<?= $token ?>"
       method="post"
-      name="resetForm"
+      name="reset_form"
       onsubmit="return validateFormResetPassword()">
 
     <input type="password" name="password" placeholder="New Password"/>
-    <p class="error" id="err_password_reset">password is required!</p>
-    <input type="password" name="passwordConfirm" placeholder="Confirm Password"/>
-    <p class="error" id="err_password_reset_confirm">password and confirm password must be match!</p>
+    <p class="error" id="err-password-reset">password is required!</p>
+    <input type="password" name="password_confirm" placeholder="Confirm Password"/>
+    <p class="error" id="err-password-reset-confirm">password and confirm password must be match!</p>
     <button type="submit" name="reset">Reset Password</button>
 </form>

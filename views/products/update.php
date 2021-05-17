@@ -10,7 +10,7 @@
                   class="signup-form"
                   autocomplete="off"
                   method="post"
-                  enctype="multipart/form-data" name="formUpdateProduct"
+                  enctype="multipart/form-data" name="form_update_product"
                   onsubmit="return validateFormUpdateProduct()">
                 <div class="modal-header">
                     <h3 class="modal-title">Update Product</h3>
@@ -24,7 +24,7 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-input" id="name" placeholder="Eg: iphone 11" name="name"
                                    value="<?= $product->name ?>">
-                            <p class="error" id="err_name_product">Name is required!</p>
+                            <p class="error" id="err-name-product">Name is required!</p>
                         </div>
 
                         <div class="form-group">
@@ -32,7 +32,7 @@
                             <input type="number" class="form-input" id="price" placeholder="Eg: 50000" name="price"
                                    step="0.01" min="0"
                                    value="<?= $product->price ?>">
-                            <p class="error" id="err_price_product">Price is required!</p>
+                            <p class="error" id="err-price-product">Price is required!</p>
                         </div>
 
                         <div class="form-group">
@@ -48,23 +48,23 @@
                                 }
                                 ?>
                             </select>
-                            <p class="error" id="err_select_product">Category is required!</p>
+                            <p class="error" id="err-select-product">Category is required!</p>
                         </div>
 
                         <div class="form-group">
                             <label for="image" class="form-label">Image</label>
                             <input type="file" class="form-input" id="image" name="image"
                                    onchange="PreviewImage();">
-                            <p class="error" id="err_image_product">Image is required!</p>
+                            <p class="error" id="err-image-product">Image is required!</p>
                         </div>
-                        <img id="uploadPreview" style="width: 100px; height: 100px;" src="<?= $product->image ?>"/>
+                        <img id="upload-preview" style="width: 100px; height: 100px;" src="<?= $product->image ?>"/>
 
                         <!-- END -->
                     </div>
                 </div>
                 <div style="clear:both;"></div>
                 <div class="modal-footer">
-                    <button name="updateProduct" class="btn btn-warning" type="submit">
+                    <button name="update_product" class="btn btn-warning" type="submit">
                         <span class="glyphicon glyphicon-edit"></span> Update
                     </button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">
@@ -82,7 +82,7 @@
         oFReader.readAsDataURL(document.getElementById("image").files[0]);
 
         oFReader.onload = function (oFREvent) {
-            document.getElementById("uploadPreview").src = oFREvent.target.result;
+            document.getElementById("upload-preview").src = oFREvent.target.result;
         };
     };
 

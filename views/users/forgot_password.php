@@ -18,7 +18,7 @@
                             <form id="register-form" role="form" autocomplete="off" class="form" method="post"
                                   action="index.php?controller=users&action=forgot-password-form"
                                   onsubmit="return validateFormForgotPassword()"
-                                  name="forgotForm">
+                                  name="forgot_form">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i
@@ -27,7 +27,7 @@
                                                type="email">
                                     </div>
                                     <br/>
-                                    <p class="error" id="err_email_forgot">Email is required!</p>
+                                    <p class="error" id="err-email-forgot">Email is required!</p>
                                 </div>
                                 <?php
                                 if (isset($notify)) {
@@ -35,7 +35,7 @@
                                 }
                                 ?>
                                 <div class="form-group">
-                                    <input name="recoverPassword" class="btn btn-lg btn-primary btn-block"
+                                    <input name="recover_password" class="btn btn-lg btn-primary btn-block"
                                            value="Send" type="submit">
                                 </div>
 

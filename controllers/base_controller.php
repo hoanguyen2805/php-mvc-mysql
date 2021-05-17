@@ -1,5 +1,4 @@
 <?php
-require_once('models/product_model.php');
 
 class BaseController
 {
@@ -38,8 +37,6 @@ class BaseController
             require_once($view_file);
             $content = ob_get_clean();
             // Sau khi có kết quả đã được lưu vào biến $content, gọi ra template chung của hệ thống đế hiển thị ra cho người dùng
-            $product = new ProductModel();
-            $categories = $product->getCategories();
             require_once('views/layouts/application.php');
         } else {
             // Nếu file muốn gọi ra không tồn tại thì chuyển hướng đến trang báo lỗi.

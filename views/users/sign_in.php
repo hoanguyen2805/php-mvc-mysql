@@ -5,12 +5,12 @@ if (isset($notify)) {
 }
 ?>
 <form class="login-form" autocomplete="off" action="index.php?controller=users&action=sign-in-form" method="post"
-      name="loginForm"
+      name="login_form"
       onsubmit="return validateFormLogin()">
     <input type="text" name="username" placeholder="Username"/>
-    <p class="error" id="err_username">username is required!</p>
+    <p class="error" id="err-username">username is required!</p>
     <input type="password" name="password" placeholder="Password"/>
-    <p class="error" id="err_password">password is required!</p>
+    <p class="error" id="err-password">password is required!</p>
     <div class="nav">
         <a href="index.php?controller=users&action=forgot-password" class="forgot">Forgot password?</a>
         <a href="index.php?controller=users&action=sign-up" class="forgot">Sign up!</a>

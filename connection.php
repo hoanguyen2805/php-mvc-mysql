@@ -44,7 +44,7 @@ class Database
     /**
      *
      * Hoa
-     * execute the query - insert, update, delete
+     * execute the query
      *
      */
     public function execute($options = array())
@@ -68,7 +68,7 @@ class Database
      *
      * Hoa
      * Funtion load datas on table
-     * return an array, if there is no record -> array = null or count(array) = 0
+     * return an array, if there is no a record -> array = null or count(array) = 0
      *
      */
     public function loadAllRows($options = array())
@@ -76,13 +76,14 @@ class Database
         // nếu không có tham số
         if (!$options) {
             // nếu truy vấn lỗi
-            if (!$result = $this->execute()) {
+            $result = $this->execute();
+            if (!$result) {
                 return false;
             }
-        } // nếu có tham số
-        else {
+        } else {
             // nếu truy vấn lỗi
-            if (!$result = $this->execute($options)) {
+            $result = $this->execute($options);
+            if (!$result) {
                 return false;
             }
         }
@@ -101,11 +102,13 @@ class Database
     public function loadRow($option = array())
     {
         if (!$option) {
-            if (!$result = $this->execute()) {
+            $result = $this->execute();
+            if (!$result) {
                 return false;
             }
         } else {
-            if (!$result = $this->execute($option)) {
+            $result = $this->execute($option);
+            if (!$result) {
                 return false;
             }
         }
@@ -122,11 +125,13 @@ class Database
     public function loadRecord($option = array())
     {
         if (!$option) {
-            if (!$result = $this->execute()) {
+            $result = $this->execute();
+            if (!$result) {
                 return false;
             }
         } else {
-            if (!$result = $this->execute($option)) {
+            $result = $this->execute($option);
+            if (!$result) {
                 return false;
             }
         }

@@ -70,9 +70,9 @@ class UsersController extends BaseController
                 $data = array(
                     'notify' => $_GET['notify'],
                 );
-                $this->render('sign-up', $data);
+                $this->render('sign_up', $data);
             }
-            $this->render('sign-up');
+            $this->render('sign_up');
         }
     }
 
@@ -85,12 +85,12 @@ class UsersController extends BaseController
      */
     public function signUpForm()
     {
-        if (isset($_POST['signUp'])) {
-            $fullName = trim($_POST['fullName']);
+        if (isset($_POST['sign_up'])) {
+            $fullName = trim($_POST['full_name']);
             $email = trim($_POST['email']);
             $username = trim($_POST['username']);
             $password = trim(md5($_POST['password']));
-            $birthDay = trim($_POST['birth']);
+            $birthDay = trim($_POST['birth_day']);
             $notify = "";
             if ($this->userModel->validateSignUp($fullName, $email, $username, $password, $birthDay)) {
                 $this->userModel->signUp($fullName, $email, $username, $password, $birthDay);
@@ -122,9 +122,9 @@ class UsersController extends BaseController
                 $data = array(
                     'notify' => $_GET['notify'],
                 );
-                $this->render('sign-in', $data);
+                $this->render('sign_in', $data);
             }
-            $this->render('sign-in');
+            $this->render('sign_in');
         }
 
     }
@@ -186,9 +186,9 @@ class UsersController extends BaseController
                 $data = array(
                     'notify' => $_GET['notify'],
                 );
-                $this->render('forgot-password', $data);
+                $this->render('forgot_password', $data);
             }
-            $this->render('forgot-password');
+            $this->render('forgot_password');
         }
     }
 
@@ -201,7 +201,7 @@ class UsersController extends BaseController
      */
     public function forgotPasswordForm()
     {
-        if (isset($_POST['recoverPassword'])) {
+        if (isset($_POST['recover_password'])) {
             $email = $_POST["email"];
             $this->userModel->forgotPassword($email);
             $notify = "";
@@ -235,9 +235,9 @@ class UsersController extends BaseController
                 $data = array(
                     'notify' => $_GET['notify'],
                 );
-                $this->render('reset-password', $data);
+                $this->render('reset_password', $data);
             }
-            $this->render('reset-password');
+            $this->render('reset_password');
         }
     }
 

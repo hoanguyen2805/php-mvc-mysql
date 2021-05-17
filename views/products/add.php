@@ -7,19 +7,19 @@
     ?>
     <form action="index.php?controller=products&action=add-product-form" class="signup-form" autocomplete="off"
           method="post"
-          enctype="multipart/form-data" name="formAddProduct"
+          enctype="multipart/form-data" name="form_add_product"
           onsubmit="return validateFormAddProduct()">
 
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-input" id="name" placeholder="Eg: iphone 11" name="name">
-            <p class="error" id="err_name_product">Name is required!</p>
+            <p class="error" id="err-name-product">Name is required!</p>
         </div>
 
         <div class="form-group">
             <label for="price" class="form-label">Price</label>
             <input type="number" class="form-input" id="price" placeholder="Eg: 50000" name="price" step="0.01" min="0">
-            <p class="error" id="err_price_product">Price is required!</p>
+            <p class="error" id="err-price-product">Price is required!</p>
         </div>
 
         <div class="form-group">
@@ -33,14 +33,14 @@
                 }
                 ?>
             </select>
-            <p class="error" id="err_select_product">Category is required!</p>
+            <p class="error" id="err-select-product">Category is required!</p>
         </div>
 
         <div class="form-group">
             <label for="image" class="form-label">Image</label>
             <input type="file" class="form-input" id="image" name="image">
-            <p class=" error" id="err_image_product">Image is required!</p>
+            <p class=" error" id="err-image-product">Image is required!</p>
         </div>
-        <button type="submit" class="form-submit" name="addProduct">ADD</button>
+        <button type="submit" class="form-submit" name="add_product">ADD</button>
     </form>
 </div>
