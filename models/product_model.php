@@ -171,6 +171,18 @@ class ProductModel
     /**
      *
      * Hoa
+     * Create at 17-05-2021 10h40
+     * get total page
+     *
+     */
+    public function getTotalPages()
+    {
+        return ceil($this->countRecord() / 5);
+    }
+
+    /**
+     *
+     * Hoa
      * Created at 07-05-2021 09h00
      * paginate product
      *

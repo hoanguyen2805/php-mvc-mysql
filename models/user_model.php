@@ -22,25 +22,41 @@ class UserModel
     {
         $check = true;
         $err = "";
+        $regexUsername = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $username);
         if ($fullName == "") {
-            $err = $err . "Full Name is required. ";
+            $err = $err . "Full Name is required.\n";
+            $check = false;
+        } elseif (strlen($fullName) < 4 || strlen($fullName) > 255) {
+            $err = $err . "Full name between 4 and 255 characters!\n";
             $check = false;
         }
         if ($username == "") {
-            $err = $err . "Username is required. ";
+            $err = $err . "Username is required.\n";
+            $check = false;
+        } elseif (strlen($username) < 4 || strlen($username) > 255) {
+            $err = $err . "Username between 4 and 255 characters!\n";
             $check = false;
         }
-        $regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $username);
-        if (!$regex) {
+        if (!$regexUsername) {
             $err = $err . "The Username cannot contain special characters. ";
             $check = false;
         }
         if ($email == "") {
             $err = $err . "Email is required.\n ";
             $check = false;
+        } elseif (strlen($email) < 5 || strlen($email) > 32) {
+            $err = $err . "Email between 4 and 255 characters!\n";
+            $check = false;
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $err = $err . "Email is not a valid email address!\n";
+            $check = false;
         }
         if ($password == "") {
             $err = $err . "Password is required.\n ";
+            $check = false;
+        } elseif (strlen($password) < 4 || strlen($password) > 20) {
+            $err = $err . "Password between 4 and 20 characters!\n";
             $check = false;
         }
         if ($birthDay == "") {
@@ -171,39 +187,78 @@ class UserModel
     /**
      *
      * Hoa
+     * Created at 18-05-2021 10h00
+     * validate form SignIn
+     *
+     */
+    public function validateSignIn($username, $password)
+    {
+        //
+        if ($username == "") {
+            $_SESSION["signInNotify"] = "The username field is required!";
+            return false;
+        }
+        if ($password == "") {
+            $_SESSION["signInNotify"] = "The password field is required!";
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     *
+     * Hoa
      * Created at 05-05-2021 14h40
      * sign in
      *
      */
     public function signIn($username, $password)
     {
-        //validate form SignIn
-        if (trim($username) == "") {
-            $_SESSION["signInNotify"] = "The username field is required!";
-            return false;
+        if ($this->validateSignIn($username, $password)) {
+            $password = md5($password);
+            $sql = "SELECT * FROM user WHERE username = '$username'";
+            $this->db->setQuery($sql);
+            $result = $this->db->loadRow();
+            if ($result === false) {
+                $_SESSION["signInNotify"] = "Username not found!";
+                return false;
+            }
+            if ($result->password !== $password) {
+                $_SESSION["signInNotify"] = "Password is incorrect!";
+                return false;
+            } else {
+                $_SESSION["id"] = $result->user_id;
+                $_SESSION["user"] = $username;
+                $_SESSION["role"] = $result->is_admin;
+                return true;
+            }
         }
-        if (trim($password) == "") {
-            $_SESSION["signInNotify"] = "The password field is required!";
-            return false;
-        }
+    }
 
-        $sql = "SELECT * FROM user WHERE username = '$username'";
-        $this->db->setQuery($sql);
-        $result = $this->db->loadRow();
-        if ($result === false) {
-            $_SESSION["signInNotify"] = "Username not found!";
+    /**
+     *
+     * Hoa
+     * Created at 18-05-2021 15h20
+     * validate for form forgot password
+     *
+     */
+    public function validateForgotPassword($email)
+    {
+        $check = true;
+        $err = "";
+        if ($email == "") {
+            $err = $err . "Please enter your email!\n ";
+            $check = false;
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $err = $err . "Email is not a valid email address!\n";
+            $check = false;
+        }
+        if ($check == false) {
+            $_SESSION['forgotPasswordNotify'] = $err;
             return false;
         }
-        if ($result->password !== $password) {
-            $_SESSION["signInNotify"] = "Password is incorrect!";
-            return false;
-        } else {
-            $_SESSION["id"] = $result->user_id;
-            $_SESSION["user"] = $username;
-            $_SESSION["role"] = $result->is_admin;
-            return true;
-        }
-
+        return true;
     }
 
     /**
@@ -215,16 +270,11 @@ class UserModel
      */
     public function forgotPassword($email)
     {
-        if (trim($email) == "") {
-            $_SESSION['forgotPasswordNotify'] = "Please enter your email!";
-            return false;
-        } else {
+        if ($this->validateForgotPassword($email)) {
             if ($this->isEmailExists($email)) {
                 $this->sendEmail($email);
-                return true;
             } else {
                 $_SESSION['forgotPasswordNotify'] = "Email not found!";
-                return false;
             }
         }
     }
@@ -302,6 +352,30 @@ class UserModel
         return $result;
     }
 
+    /**
+     *
+     * Hoa
+     * Created at 18-05-2021 17h00
+     * Validate for form Reset password
+     *
+     */
+    public function validateResetPassword($password)
+    {
+        $check = true;
+        $err = "";
+        if ($password == "") {
+            $err = $err . "Password is required.";
+            $check = false;
+        } elseif (strlen($password) < 4 || strlen($password) > 20) {
+            $err = $err . "Password between 4 and 20 characters!";
+            $check = false;
+        }
+        if ($check == false) {
+            $_SESSION['resetPasswordNotify'] = $err;
+            return false;
+        }
+        return true;
+    }
 
     /**
      *
@@ -312,12 +386,15 @@ class UserModel
      */
     public function resetPassword($email, $token, $password)
     {
+        if (!$this->validateResetPassword($password)) {
+            return false;
+        }
         if ($this->isEmailAndTokenExist($email, $token)) {
             if ($this->isEmailExists($email)) {
                 $user = $this->getUserByEmail($email);
-                $user->password = $password;
+                $user->password = md5($password);
                 //update password
-                $sql = "UPDATE user SET password = '$user->password' WHERE user_id = $user->id";
+                $sql = "UPDATE user SET password = '$user->password' WHERE user_id = $user->user_id";
                 $this->db->setQuery($sql);
                 $this->db->execute();
                 //delete token
@@ -329,6 +406,8 @@ class UserModel
                 $_SESSION['resetPasswordNotify'] = "User not found!";
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
@@ -365,6 +444,19 @@ class UserModel
         $this->db->setQuery($sql);
         return $this->db->loadRecord();
     }
+
+    /**
+     *
+     * Hoa
+     * Created at 17-05-2021 10h55
+     * get total pages
+     *
+     */
+    public function getTotalPages($key)
+    {
+        return ceil($this->countRecord($key) / 5);
+    }
+
 
     /**
      *

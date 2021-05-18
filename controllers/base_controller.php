@@ -2,6 +2,9 @@
 
 class BaseController
 {
+    /**
+     * @var folder
+     */
     protected $folder;
 
     /**

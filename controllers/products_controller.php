@@ -4,6 +4,14 @@ require_once('controllers/base_controller.php');
 
 class ProductsController extends BaseController
 {
+    /**
+     * @var ProductModel
+     */
+    protected $productModel;
+
+    /**
+     * ProductsController constructor
+     */
     function __construct()
     {
         $this->folder = 'products';
@@ -40,9 +48,8 @@ class ProductsController extends BaseController
                     $page = $_GET['page'];
                 }
                 $products = $this->productModel->paginate($page);
-                $size = $this->productModel->countRecord();
                 $categories = $this->productModel->getCategories();
-                $totalPages = ceil($size / 5);
+                $totalPages = $this->productModel->getTotalPages();
                 // thong bao cho update
                 $notify = "";
                 if (isset($_SESSION["updateProductNotify"])) {

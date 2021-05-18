@@ -5,6 +5,14 @@ require_once('controllers/base_controller.php');
 class UsersController extends BaseController
 {
 
+    /**
+     * @var UserModel
+     */
+    protected $userModel;
+
+    /**
+     * UsersController constructor
+     */
     function __construct()
     {
         $this->folder = 'users';
@@ -89,11 +97,11 @@ class UsersController extends BaseController
             $fullName = trim($_POST['full_name']);
             $email = trim($_POST['email']);
             $username = trim($_POST['username']);
-            $password = trim(md5($_POST['password']));
+            $password = trim($_POST['password']);
             $birthDay = trim($_POST['birth_day']);
             $notify = "";
             if ($this->userModel->validateSignUp($fullName, $email, $username, $password, $birthDay)) {
-                $this->userModel->signUp($fullName, $email, $username, $password, $birthDay);
+                $this->userModel->signUp($fullName, $email, $username, md5($password), $birthDay);
             }
             if (isset($_SESSION["signUpNotify"])) {
                 $notify = $_SESSION["signUpNotify"];
@@ -139,8 +147,8 @@ class UsersController extends BaseController
     public function signInForm()
     {
         if (isset($_POST['login'])) {
-            $username = $_POST['username'];
-            $password = md5($_POST['password']);
+            $username = trim($_POST['username']);
+            $password = trim($_POST['password']);
             $user = $this->userModel->signIn($username, $password);
             if ($user) {
                 header("location:index.php?controller=users&action=info");
@@ -202,7 +210,7 @@ class UsersController extends BaseController
     public function forgotPasswordForm()
     {
         if (isset($_POST['recover_password'])) {
-            $email = $_POST["email"];
+            $email = trim($_POST["email"]);
             $this->userModel->forgotPassword($email);
             $notify = "";
             if (isset($_SESSION['forgotPasswordNotify'])) {
@@ -257,14 +265,14 @@ class UsersController extends BaseController
             $email = trim($_GET['key']);
             $token = trim($_GET['token']);
             if (isset($_POST['reset'])) {
-                $newPassword = md5($_POST['password']);
-                $newPassword = $this->userModel->resetPassword($email, $token, $newPassword);
+                $newPassword = trim($_POST['password']);
+                $result = $this->userModel->resetPassword($email, $token, $newPassword);
                 $notify = "";
                 if (isset($_SESSION['resetPasswordNotify'])) {
                     $notify = $_SESSION['resetPasswordNotify'];
                     unset($_SESSION['resetPasswordNotify']);
                 }
-                if ($newPassword) {
+                if ($result) {
                     echo "<script>
                             alert('Success! Please Log in');
                             window.location.href='index.php?controller=users&action=sign-in';
@@ -301,10 +309,9 @@ class UsersController extends BaseController
                     $key = trim($_GET['key']);
                 }
                 $users = $this->userModel->paginate($page, trim($key));
-                $size = $this->userModel->countRecord($key);
-                $totalPages = ceil($size / 5);
+                $totalPages = $this->userModel->getTotalPages($key);
                 $data = array('users' => $users, 'totalPages' => $totalPages);
-                $this->render("list", $data);
+                $this->render("manage_user", $data);
             } else {
                 echo "<script>
                             alert('You are not permitted to use this feature!');

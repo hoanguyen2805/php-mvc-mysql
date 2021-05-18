@@ -6,67 +6,129 @@
  *
  */
 function validateFormSignUp() {
-    let fullName = document.forms["my_form"]["full_name"].value;
-    let email = document.forms["my_form"]["email"].value;
-    let username = document.forms["my_form"]["username"].value;
-    let password = document.forms["my_form"]["password"].value;
-    let confirmPassword = document.forms["my_form"]["confirm_password"].value;
-    let birth = document.forms["my_form"]["birth_day"].value;
-    let avatar = document.forms["my_form"]["avatar"].value;
+    let fullName = document.forms["my_form"]["full_name"].value.trim();
+    let email = document.forms["my_form"]["email"].value.trim();
+    let username = document.forms["my_form"]["username"].value.trim();
+    let password = document.forms["my_form"]["password"].value.trim();
+    let confirmPassword = document.forms["my_form"]["confirm_password"].value.trim();
+    let birth = document.forms["my_form"]["birth_day"].value.trim();
+    let avatar = document.forms["my_form"]["avatar"].value.trim();
     let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
     let check = true;
+
+    let errName = document.getElementById("err-sign-up-name");
+    let errEmail = document.getElementById("err-sign-up-email");
+    let errUsername = document.getElementById("err-sign-up-username");
+    let errBirthday = document.getElementById("err-sign-up-birth-day");
+    let errAvatar = document.getElementById("err-sign-up-avatar");
+    let errPassword = document.getElementById("err-sign-up-password");
+    let errConfirmPassword = document.getElementById("err-sign-up-password-confirm");
+    // Full name
     if (fullName == "" || fullName == null) {
-        document.getElementById("err-name").style.display = "block";
+        errName.style.display = "block";
+        errName.innerText = "Full Name is required!";
+        document.forms["my_form"]["full_name"].style.border = "1px solid red";
+        check = false;
+    } else if (fullName.length < 4 || fullName.length > 255) {
+        errName.style.display = "block";
+        errName.innerText = "Please input the full name between 4 and 255 characters!";
+        document.forms["my_form"]["full_name"].style.border = "1px solid red";
         check = false;
     } else {
-        document.getElementById("err-name").style.display = "none";
-    }
-    if (email == "" || email == null) {
-        document.getElementById("err-email").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-email").style.display = "none";
-    }
-    if (username == "" || username == null) {
-        document.getElementById("err-username").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-username").style.display = "none";
-    }
-    if (password == "" || password == null) {
-        document.getElementById("err-password").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-password").style.display = "none";
-    }
-    if (birth == "" || birth == null) {
-        document.getElementById("err-birth-day").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-birth-day").style.display = "none";
-    }
-    if (avatar == "" || avatar == null) {
-        document.getElementById("err-avatar").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-avatar").style.display = "none";
-    }
-    if (password != confirmPassword) {
-        document.getElementById("err-password-confirm").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-password-confirm").style.display = "none";
-    }
-    if (check == false) {
-        return check;
+        errName.style.display = "none";
+        document.forms["my_form"]["full_name"].style.border = "0";
     }
 
-    if (check) {
-        if (!regex.test(username)) {
-            alert("Please do not enter following special characters in the Username field");
-            check = false;
-            return check;
-        }
+    // Email
+    if (email == "" || email == null) {
+        errEmail.style.display = "block";
+        errEmail.innerText = "Email is required!";
+        document.forms["my_form"]["email"].style.border = "1px solid red";
+        check = false;
+    } else if (email.length < 5 || email.length > 32) {
+        errEmail.style.display = "block";
+        errEmail.innerText = "Please input the email between 5 and 32 characters!";
+        document.forms["my_form"]["email"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errEmail.style.display = "none";
+        document.forms["my_form"]["email"].style.border = "0";
+    }
+
+    // Username
+    if (username == "" || username == null) {
+        errUsername.style.display = "block";
+        errUsername.innerText = "Username is required!";
+        document.forms["my_form"]["username"].style.border = "1px solid red";
+        check = false;
+    } else if (!regex.test(username) && username != "") {
+        errUsername.style.display = "block";
+        errUsername.innerText = "Please do not enter following special characters in the username field";
+        document.forms["my_form"]["username"].style.border = "1px solid red";
+        check = false;
+    } else if (username.length < 4 || username.length > 255) {
+        errUsername.style.display = "block";
+        errUsername.innerText = "Please input the username between 4 and 255 characters!";
+        document.forms["my_form"]["username"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errUsername.style.display = "none";
+        document.forms["my_form"]["username"].style.border = "0";
+    }
+
+    // Password
+    if (password == "" || password == null) {
+        errPassword.style.display = "block";
+        errPassword.innerText = "Password is required!";
+        document.forms["my_form"]["password"].style.border = "1px solid red";
+        check = false;
+    } else if (password.length < 4 || password.length > 20) {
+        errPassword.style.display = "block";
+        errPassword.innerText = "Please input the password between 4 and 20 characters!";
+        document.forms["my_form"]["password"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errPassword.style.display = "none";
+        document.forms["my_form"]["password"].style.border = "0";
+    }
+
+    if (confirmPassword == "" && confirmPassword == password) {
+        errConfirmPassword.style.display = "block";
+        errConfirmPassword.innerText = "Confirm password is required!";
+        document.forms["my_form"]["confirm_password"].style.border = "1px solid red";
+        check = false;
+    } else if (password != confirmPassword) {
+        errConfirmPassword.style.display = "block";
+        errConfirmPassword.innerText = "password and confirm password must be match!";
+        document.forms["my_form"]["confirm_password"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errConfirmPassword.style.display = "none";
+        document.forms["my_form"]["confirm_password"].style.border = "0";
+    }
+
+    // Birthday
+    if (birth == "" || birth == null) {
+        errBirthday.style.display = "block";
+        document.forms["my_form"]["birth_day"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errBirthday.style.display = "none";
+        document.forms["my_form"]["birth_day"].style.border = "0";
+    }
+
+    // Avatar
+    if (avatar == "" || avatar == null) {
+        errAvatar.style.display = "block";
+        document.forms["my_form"]["avatar"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errAvatar.style.display = "none";
+        document.forms["my_form"]["avatar"].style.border = "0";
+    }
+
+    if (check == false) {
+        return check;
     }
 }
 
@@ -82,22 +144,24 @@ function validateFormLogin() {
     let password = document.forms["login_form"]["password"].value;
     let check = true;
     if (username.trim() == "" || username == null) {
-        document.getElementById("err-username").style.display = "block";
+        document.getElementById("err-login-username").style.display = "block";
+        document.forms["login_form"]["username"].style.borderColor = "red";
         check = false;
     } else {
-        document.getElementById("err-username").style.display = "none";
+        document.getElementById("err-login-username").style.display = "none";
+        document.forms["login_form"]["username"].style.borderColor = "#eee";
     }
     if (password == "" || username == null) {
-        document.getElementById("err-password").style.display = "block";
+        document.getElementById("err-login-password").style.display = "block";
+        document.forms["login_form"]["password"].style.borderColor = "red";
         check = false;
     } else {
-        document.getElementById("err-password").style.display = "none";
+        document.getElementById("err-login-password").style.display = "none";
+        document.forms["login_form"]["password"].style.borderColor = "#eee";
     }
     if (check == false) {
         return false;
     }
-
-
 }
 
 
@@ -109,10 +173,11 @@ function validateFormLogin() {
  *
  */
 function validateFormForgotPassword() {
-    let email = document.forms["forgot-form"]["email"].value;
+    let email = document.forms["forgot_form"]["email"].value;
     let check = true;
     if (email == "" || email == null) {
         document.getElementById("err-email-forgot").style.display = "block";
+        document.forms["forgot_form"]["email"].style.borderColor = "red";
         check = false;
     } else {
         document.getElementById("err-email-forgot").style.display = "none";
@@ -132,19 +197,39 @@ function validateFormForgotPassword() {
 function validateFormResetPassword() {
     let password = document.forms["reset_form"]["password"].value;
     let confirmPassword = document.forms["reset_form"]["password_confirm"].value;
+    let errPasswordReset = document.getElementById("err-password-reset");
+    let errConfirmPasswordReset = document.getElementById("err-password-reset-confirm");
     let check = true;
-    if (password !== confirmPassword) {
-        document.getElementById("err-password-reset-confirm").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-password-reset-confirm").style.display = "none";
-    }
     if (password == "" || password == null) {
-        document.getElementById("err-password-reset").style.display = "block";
+        errPasswordReset.style.display = "block";
+        errPasswordReset.innerText = "Password is required";
+        document.forms["reset_form"]["password"].style.borderColor = "red";
+        check = false;
+    } else if (password.length < 4 || password.length > 20) {
+        errPasswordReset.style.display = "block";
+        errPasswordReset.innerText = "Please input the password between 4 and 20 characters!";
+        document.forms["reset_form"]["password"].style.borderColor = "red";
         check = false;
     } else {
-        document.getElementById("err-password-reset").style.display = "none";
+        errPasswordReset.style.display = "none";
+        document.forms["reset_form"]["password"].style.borderColor = "#eee";
     }
+
+    if (confirmPassword == "" && confirmPassword == password) {
+        errConfirmPasswordReset.style.display = "block";
+        errConfirmPasswordReset.innerText = "Confirm password is required!";
+        document.forms["reset_form"]["password_confirm"].style.borderColor = "red";
+        check = false;
+    } else if (password != confirmPassword) {
+        errConfirmPasswordReset.style.display = "block";
+        errConfirmPasswordReset.innerText = "password and confirm password must be match!";
+        document.forms["reset_form"]["password_confirm"].style.borderColor = "red";
+        check = false;
+    } else {
+        errConfirmPasswordReset.style.display = "none";
+        document.forms["reset_form"]["password_confirm"].style.borderColor = "#eee";
+    }
+
     if (check == false) {
         return check;
     }

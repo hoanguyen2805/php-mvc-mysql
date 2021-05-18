@@ -1,0 +1,68 @@
+@media only screen and (max-width: 1199.98px) {
+    .container-w {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 991.98px) {
+    .container-w {
+        width: 80%;
+    }
+
+    .sign-up-form .col {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 767.98px) {
+    .container-w {
+        width: 85%;
+    }
+
+    .sign-up-form .col {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 575.98px) {
+    .top-bar__menu a:not(:first-child) {
+        display: none;
+    }
+
+    .top-bar__menu a.icon {
+        float: right;
+        display: block;
+    }
+
+    .top-bar__menu.responsive {
+        position: relative;
+    }
+
+    .top-bar__menu.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .top-bar__menu.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    .container-w {
+        width: 95%;
+    }
+
+    .login-form .col {
+        width: 100%;
+    }
+
+    .reset-password .col {
+        width: 100%;
+    }
+
+    .sign-up-form .col {
+        width: 100%;
+    }
+}
