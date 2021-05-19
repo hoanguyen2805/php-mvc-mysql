@@ -22,31 +22,82 @@ class UsersController extends BaseController
     /**
      *
      * Hoa
+     * Created at 19-05-2021 10h10
+     * filter method
+     *
+     */
+    public function __call($method, $arguments)
+    {
+        // TODO: Implement __call() method.
+        if (method_exists($this, $method)) {
+            // chưa login thì không được truy cập
+            if (in_array($method, ['info', 'listUsers', 'formSearch', 'deleteUser']) && !$this->isLogin()) {
+                header("location:index.php?controller=users&action=sign-in");
+                return null;
+            }
+            // đã login thì không được truy cập
+            if (in_array($method,
+                    [
+                        'signUp',
+                        'signUpForm',
+                        'signIn',
+                        'signInForm',
+                        'forgotPassword',
+                        'forgotPasswordForm',
+                        'resetPassword',
+                        'resetPasswordForm'
+                    ]) && $this->isLogin()) {
+                header("location:index.php?controller=users&action=info");
+                return null;
+            }
+
+            return call_user_func_array([$this, $method], $arguments);
+        }
+    }
+
+    /**
+     *
+     * Hoa
+     * Created at 19-05-2021 14h00
+     * check login
+     *
+     */
+    private function isLogin()
+    {
+        if (isset($_SESSION["user"])) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * Hoa
      * Created at 05-05-2021 09h00
      * go to page user information
      *
      */
-    public function info()
+    protected function info()
     {
-        if (isset($_SESSION["user"])) {
-            $username = $_SESSION["user"];
-            $user = $this->userModel->getUserByUsername($username);
-            if ($user == null) {
-                header("location:index.php?controller=users&action=sign-in");
-            } else {
-                $data = array(
-                    'full_name' => $user->full_name,
-                    'email' => $user->email,
-                    'username' => $user->username,
-                    'password' => $user->password,
-                    'birth_day' => $user->birth_day,
-                    'avatar' => $user->avatar,
-                    'is_admin' => $user->is_admin
-                );
-                $this->render('info', $data);
-            }
-        } else {
+        $username = $_SESSION["user"];
+        $user = $this->userModel->getUserByUsername($username);
+        if ($user == null) {
             header("location:index.php?controller=users&action=sign-in");
+        } else {
+
+            $data = array(
+                'full_name' => $user->full_name,
+                'email' => $user->email,
+                'username' => $user->username,
+                'password' => $user->password,
+                'birth_day' => $user->birth_day,
+                'avatar' => $user->avatar,
+                'is_admin' => $user->is_admin
+            );
+            if (isset($_GET['notify'])) {
+                $data['notify'] = $_GET['notify'];
+            }
+            $this->render('info', $data);
         }
     }
 
@@ -69,19 +120,15 @@ class UsersController extends BaseController
      * go to page sign up
      *
      */
-    public function signUp()
+    protected function signUp()
     {
-        if (isset($_SESSION["user"])) {
-            header("location:index.php?controller=users&action=info");
-        } else {
-            if (isset($_GET['notify'])) {
-                $data = array(
-                    'notify' => $_GET['notify'],
-                );
-                $this->render('sign_up', $data);
-            }
-            $this->render('sign_up');
+        if (isset($_GET['notify'])) {
+            $data = array(
+                'notify' => $_GET['notify'],
+            );
+            $this->render('sign_up', $data);
         }
+        $this->render('sign_up');
     }
 
     /**
@@ -91,7 +138,7 @@ class UsersController extends BaseController
      * handling form sign up
      *
      */
-    public function signUpForm()
+    protected function signUpForm()
     {
         if (isset($_POST['sign_up'])) {
             $fullName = trim($_POST['full_name']);
@@ -121,20 +168,15 @@ class UsersController extends BaseController
      * go to page sign in
      *
      */
-    public function signIn()
+    protected function signIn()
     {
-        if (isset($_SESSION["user"])) {
-            header("location:index.php?controller=users&action=info");
-        } else {
-            if (isset($_GET['notify'])) {
-                $data = array(
-                    'notify' => $_GET['notify'],
-                );
-                $this->render('sign_in', $data);
-            }
-            $this->render('sign_in');
+        if (isset($_GET['notify'])) {
+            $data = array(
+                'notify' => $_GET['notify'],
+            );
+            $this->render('sign_in', $data);
         }
-
+        $this->render('sign_in');
     }
 
     /**
@@ -144,7 +186,7 @@ class UsersController extends BaseController
      * handling form sign in
      *
      */
-    public function signInForm()
+    protected function signInForm()
     {
         if (isset($_POST['login'])) {
             $username = trim($_POST['username']);
@@ -185,19 +227,17 @@ class UsersController extends BaseController
      * go to page forgot password
      *
      */
-    public function forgotPassword()
+    protected function forgotPassword()
     {
-        if (isset($_SESSION["user"])) {
-            header("location:index.php?controller=users&action=info");
+        if (isset($_GET['notify'])) {
+            $data = array(
+                'notify' => $_GET['notify'],
+            );
+            $this->render('forgot_password', $data);
         } else {
-            if (isset($_GET['notify'])) {
-                $data = array(
-                    'notify' => $_GET['notify'],
-                );
-                $this->render('forgot_password', $data);
-            }
             $this->render('forgot_password');
         }
+
     }
 
     /**
@@ -207,7 +247,7 @@ class UsersController extends BaseController
      * handling form forgot password - send email
      *
      */
-    public function forgotPasswordForm()
+    protected function forgotPasswordForm()
     {
         if (isset($_POST['recover_password'])) {
             $email = trim($_POST["email"]);
@@ -231,22 +271,15 @@ class UsersController extends BaseController
      * go to page reset password
      *
      */
-    public function resetPassword()
+    protected function resetPassword()
     {
-        if (isset($_SESSION["user"])) {
-            echo "<script>
-                          alert('Please Log out before using this feature!');
-                          window.location.href='index.php?controller=users';
-                  </script>";
-        } else {
-            if (isset($_GET['notify'])) {
-                $data = array(
-                    'notify' => $_GET['notify'],
-                );
-                $this->render('reset_password', $data);
-            }
-            $this->render('reset_password');
+        if (isset($_GET['notify'])) {
+            $data = array(
+                'notify' => $_GET['notify'],
+            );
+            $this->render('reset_password', $data);
         }
+        $this->render('reset_password');
     }
 
     /**
@@ -256,7 +289,7 @@ class UsersController extends BaseController
      * handling form reset password
      *
      */
-    public function resetPasswordForm()
+    protected function resetPasswordForm()
     {
         if (empty($_GET['key']) || empty($_GET['token'])) {
             $notify = "Token or email do not exist!";
@@ -273,10 +306,8 @@ class UsersController extends BaseController
                     unset($_SESSION['resetPasswordNotify']);
                 }
                 if ($result) {
-                    echo "<script>
-                            alert('Success! Please Log in');
-                            window.location.href='index.php?controller=users&action=sign-in';
-                          </script>";
+                    $notify = "Reset password successful!";
+                    header("location:index.php?controller=users&action=reset-password&notify=$notify");
                 } else {
                     header("location:index.php?controller=users&action=reset-password&key=$email&token=$token&notify=$notify");
                 }
@@ -295,33 +326,26 @@ class UsersController extends BaseController
      * just admin can go to listUsers page
      *
      */
-    public function listUsers()
+    protected function listUsers()
     {
-        if (isset($_SESSION['user'])) {
-            $role = $_SESSION["role"];
-            if ($role == 1) {
-                $page = 1;
-                $key = "";
-                if (!empty($_GET['page'])) {
-                    $page = trim($_GET['page']);
-                }
-                if (!empty($_GET['key'])) {
-                    $key = trim($_GET['key']);
-                }
-                $users = $this->userModel->paginate($page, trim($key));
-                $totalPages = $this->userModel->getTotalPages($key);
-                $data = array('users' => $users, 'totalPages' => $totalPages);
-                $this->render("manage_user", $data);
-            } else {
-                echo "<script>
-                            alert('You are not permitted to use this feature!');
-                            window.location.href='index.php?controller=users';
-                      </script>";
+        $role = $_SESSION["role"];
+        if ($role == ADMIN) {
+            $page = 1;
+            $key = "";
+            if (!empty($_GET['page'])) {
+                $page = trim($_GET['page']);
             }
+            if (!empty($_GET['key'])) {
+                $key = trim($_GET['key']);
+            }
+            $users = $this->userModel->paginate($page, trim($key));
+            $totalPages = $this->userModel->getTotalPages($key);
+            $data = array('users' => $users, 'totalPages' => $totalPages);
+            $this->render("manage_user", $data);
         } else {
-            header("location:index.php?controller=users&action=sign-in");
+            $notify = "You are not permitted to use this feature!";
+            header("location:index.php?controller=users&action=info&notify=$notify");
         }
-
     }
 
     /**
@@ -331,26 +355,20 @@ class UsersController extends BaseController
      * handling form search username | email
      *
      */
-    public function formSearch()
+    protected function formSearch()
     {
-        if (isset($_SESSION['user'])) {
-            $role = $_SESSION["role"];
-            if ($role == 1) {
-                if (isset($_POST['search'])) {
-                    if ($_POST['key'] == "") {
-                        header("location:index.php?controller=users&action=list-users");
-                    } else {
-                        header("location:index.php?controller=users&action=list-users&page=1&key=" . $_POST['key']);
-                    }
+        $role = $_SESSION["role"];
+        if ($role == ADMIN) {
+            if (isset($_POST['search'])) {
+                if ($_POST['key'] == "") {
+                    header("location:index.php?controller=users&action=list-users");
+                } else {
+                    header("location:index.php?controller=users&action=list-users&page=1&key=" . $_POST['key']);
                 }
-            } else {
-                echo "<script>
-                            alert('You are not permitted to use this feature!');
-                            window.location.href='index.php?controller=users';
-                      </script>";
             }
         } else {
-            header("location:index.php?controller=users&action=sign-in");
+            $notify = "You are not permitted to use this feature!";
+            header("location:index.php?controller=users&action=info&notify=$notify");
         }
     }
 
@@ -361,24 +379,18 @@ class UsersController extends BaseController
      * just admin can delete user
      *
      */
-    public function deleteUser()
+    protected function deleteUser()
     {
-        if (isset($_SESSION['user'])) {
-            $role = $_SESSION["role"];
-            if ($role == 1) {
-                if (isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                    $this->userModel->deleteUserById($id);
-                }
-                header("location:index.php?controller=users&action=list-users");
-            } else {
-                echo "<script>
-                            alert('You are not permitted to use this feature!');
-                            window.location.href='index.php?controller=users';
-                      </script>";
+        $role = $_SESSION["role"];
+        if ($role == ADMIN) {
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $this->userModel->deleteUserById($id);
             }
+            header("location:index.php?controller=users&action=list-users");
         } else {
-            header("location:index.php?controller=users&action=sign-in");
+            $notify = "You are not permitted to use this feature!";
+            header("location:index.php?controller=users&action=info&notify=$notify");
         }
     }
 }

@@ -244,48 +244,58 @@ function validateFormResetPassword() {
  *
  */
 function validateFormAddProduct() {
-    let name = document.forms["form_add_product"]["name"].value;
-    let price = document.forms["form_add_product"]["price"].value;
-    let category = document.forms["form_add_product"]["category"].value;
+    let name = document.forms["form_add_product"]["name"].value.trim();
+    let price = document.forms["form_add_product"]["price"].value.trim();
     let img = document.forms["form_add_product"]["image"].value;
-    // let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
+
+    let errName = document.getElementById("err-name-add-product");
+    let errPrice = document.getElementById("err-price-add-product");
+    let errImg = document.getElementById("err-image-add-product");
+
     let check = true;
+
     if (name == "" || name == null) {
-        document.getElementById("err-name-product").style.display = "block";
+        errName.style.display = "block";
+        errName.innerText = "Name is required!";
+        document.forms["form_add_product"]["name"].style.border = "1px solid red";
+        check = false;
+    } else if (name.length < 4 || name.length > 255) {
+        errName.style.display = "block";
+        errName.innerText = "Please input the Name between 4 and 255 characters!";
+        document.forms["form_add_product"]["name"].style.border = "1px solid red";
         check = false;
     } else {
-        document.getElementById("err-name-product").style.display = "none";
+        errName.style.display = "none";
+        document.forms["form_add_product"]["name"].style.border = "0";
     }
-    if (price == "" || price == null || isNaN(price)) {
-        document.getElementById("err-price-product").style.display = "block";
+
+    if (isNaN(price) || price == "") {
+        errPrice.style.display = "block";
+        errPrice.innerText = "Price not valid!";
+        document.forms["form_add_product"]["price"].style.border = "1px solid red";
+        check = false;
+    } else if (price > 2147483647 || price < 0) {
+        errPrice.style.display = "block";
+        errPrice.innerText = "Please input the Price between >= 0 and <= 2147483647";
+        document.forms["form_add_product"]["price"].style.border = "1px solid red";
         check = false;
     } else {
-        document.getElementById("err-price-product").style.display = "none";
-    }
-    if (category == "" || category == null) {
-        document.getElementById("err-select-product").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-select-product").style.display = "none";
+        errPrice.style.display = "none";
+        document.forms["form_add_product"]["price"].style.border = "0";
     }
 
     if (img == "" || img == null) {
-        document.getElementById("err-image-product").style.display = "block";
+        errImg.style.display = "block";
+        document.forms["form_add_product"]["image"].style.border = "1px solid red";
         check = false;
     } else {
-        document.getElementById("err-image-product").style.display = "none";
+        errImg.style.display = "none";
+        document.forms["form_add_product"]["image"].style.border = "0";
     }
 
     if (check == false) {
         return check;
     }
-    // if (check) {
-    //     if (!regex.test(name)) {
-    //         alert("Please do not enter following special characters in the name field");
-    //         check = false;
-    //         return check;
-    //     }
-    // }
 }
 
 
@@ -298,7 +308,7 @@ function validateFormAddProduct() {
  */
 function validateFormUpdateProduct() {
     let name = document.forms["form_update_product"]["name"].value.trim();
-    let price = document.forms["form_update_product"]["price"].value;
+    let price = document.forms["form_update_product"]["price"].value.trim();
 
     let errName = document.getElementById("err-name-update-product");
     let errPrice = document.getElementById("err-price-update-product");
@@ -320,7 +330,7 @@ function validateFormUpdateProduct() {
         document.forms["form_update_product"]["name"].style.border = "0";
     }
 
-    if (isNaN(price)) {
+    if (isNaN(price) || price == "") {
         errPrice.style.display = "block";
         errPrice.innerText = "Price not valid!";
         document.forms["form_update_product"]["price"].style.border = "1px solid red";
@@ -334,7 +344,8 @@ function validateFormUpdateProduct() {
         errPrice.style.display = "none";
         document.forms["form_update_product"]["price"].style.border = "0";
     }
-    console.log(price);
+
+    console.log("chay vao day" + check);
     if (check == false) {
         return check;
     }

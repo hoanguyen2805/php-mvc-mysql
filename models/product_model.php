@@ -17,20 +17,22 @@ class ProductModel
      * validate for form add product
      *
      */
-    public function validateProduct($name, $price, $category)
+    public function validateAddProduct($name, $price, $category)
     {
         $check = true;
-        $err = "";
+        $err = "Error! ";
         if ($name == "") {
             $err = $err . "Name is required. ";
             $check = false;
-        }
-        if ($price == "" || !is_numeric($price)) {
-            $err = $err . "Price is required. ";
+        } elseif (strlen($name) < 4 || strlen($name) > 255) {
+            $err = $err . "Please input the Name filed between 4 and 255 characters!\n";
             $check = false;
         }
-        if ($price < 0) {
-            $err = $err . "Price must be greater than or equal to 0. ";
+        if ($price == "" || !is_numeric($price)) {
+            $err = $err . "Price not valid!. ";
+            $check = false;
+        } elseif ($price < 0 || $price > 2147483647) {
+            $err = $err . "Please input the Price between >= 0 and <= 2147483647! ";
             $check = false;
         }
         if ($category == "") {
@@ -272,7 +274,7 @@ class ProductModel
     public function updateProduct($newName, $price, $category, $oldName)
     {
         if ($this->isNewNameExists($newName, $oldName)) {
-            $_SESSION["updateProductNotify"] = "New Name is already taken!";
+            $_SESSION["updateProductNotify"] = "Error! New Name is already taken!";
             return false;
         }
         $sql = "SELECT * FROM product WHERE name = '$oldName'";

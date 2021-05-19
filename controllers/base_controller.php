@@ -1,5 +1,5 @@
 <?php
-
+include "models/constant.php";
 class BaseController
 {
     /**

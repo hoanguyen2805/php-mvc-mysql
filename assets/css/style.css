@@ -593,6 +593,16 @@ div.blueTable {
 }
 
 /* END UPDATE PRODUCT */
+
+/* START ADD PRODUCT */
+.add-product .row{
+    flex-direction: column;
+}
+.add-product .col{
+    width: 50%;
+    margin: 0 auto;
+}
+/* END ADD PRODUCT */
 .blueTable .tableFootStyle .links a.page-active {
     background: tomato;
 }

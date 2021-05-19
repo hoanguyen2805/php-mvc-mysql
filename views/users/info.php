@@ -4,6 +4,17 @@
             <div class="col">
                 <div class="user-info__header">
                     <h1>User Information</h1>
+                    <?php
+                    if (isset($notify)) {
+                        ?>
+                        <div class="alert alert-danger alert-dismissible"
+                             style="text-align: center; max-width: 500px; margin: 30px auto">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?= $notify ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
             <div class="col">
