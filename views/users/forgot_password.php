@@ -6,7 +6,8 @@
                     <?php
                     if (isset($notify)) {
                         ?>
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <?= $notify ?>
                         </div>
                         <?php

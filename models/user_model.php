@@ -81,11 +81,11 @@ class UserModel
     public function signUp($fullName, $email, $username, $password, $birthDay)
     {
         if ($this->isUsernameExists($username)) {
-            $_SESSION["signUpNotify"] = "Username is already taken!";
+            $_SESSION["signUpNotify"] = "Error! Username is already taken!";
             return false;
         }
         if ($this->isEmailExists($email)) {
-            $_SESSION["signUpNotify"] = "Email is already taken!";
+            $_SESSION["signUpNotify"] = "Error! Email is already taken!";
             return false;
         }
         $urlAvatar = $this->uploadAvatar();

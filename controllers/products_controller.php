@@ -193,14 +193,8 @@ class ProductsController extends BaseController
                     $price = trim($_POST['price']);
                     $category = trim($_POST['category']);
                     $oldNameProduct = trim($_GET['old']);
-                    $notify = "";
                     if ($this->productModel->validateUpdateProduct($name, $price, $category)) {
                         $product = $this->productModel->updateProduct($name, $price, $category, $oldNameProduct);
-                        if ($product) {
-                            //echo "<script>
-                            //             alert('Update successful!');
-                            //      </script>";
-                        }
                     }
                 }
                 header("location: index.php?controller=products&action=manage-product");

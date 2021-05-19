@@ -6,8 +6,12 @@
                     <h1>MANAGE PRODUCT</h1>
                     <?php
                     if (isset($notify)) {
-//    echo "<h3 class='sign-up-error'>" . $notify . "</h3>";
-                        echo '<script type="text/javascript">alert("' . $notify . '")</script>';
+                        ?>
+                        <div class="alert alert-danger alert-dismissible" style="max-width: 500px; margin: 0 auto;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?= $notify ?>
+                        </div>
+                        <?php
                     }
                     ?>
                 </div>
@@ -54,9 +58,6 @@
                                             <i class="fa fa-trash"
                                                aria-hidden="true"></i> DELETE
                                         </a>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <!--                        <a href="index.php?controller=products&action=update&name=-->
-                                        <?//= $product[0]?><!--">UPDATE</a>-->
                                         <button class="btn btn-warning" data-toggle="modal" type="button"
                                                 data-target="#update_modal_<?= $product->product_id ?>"><span
                                                     class="glyphicon glyphicon-edit"></span> Edit

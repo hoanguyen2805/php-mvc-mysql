@@ -13,3 +13,19 @@ function myFunction() {
         x.className = "top-bar__menu";
     }
 }
+
+/**
+ *
+ * Hoa
+ * Created at 19-05-2021
+ * Preview Image - update product
+ *
+ */
+function PreviewImage() {
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("image").files[0]);
+
+    oFReader.onload = function (oFREvent) {
+        document.getElementById("upload-preview").src = oFREvent.target.result;
+    };
+};

@@ -1,19 +1,13 @@
 <div class="modal fade" id="update_modal_<?= $product->product_id ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <?php
-            if (isset($notify)) {
-                echo "<h3 class='sign-up-error'>" . $notify . "</h3>";
-            }
-            ?>
             <form action="index.php?controller=products&action=update-product-form&old=<?= $product->name ?>"
-                  class="signup-form"
                   autocomplete="off"
                   method="post"
                   enctype="multipart/form-data" name="form_update_product"
                   onsubmit="return validateFormUpdateProduct()">
                 <div class="modal-header">
-                    <h3 class="modal-title">Update Product</h3>
+                    <h3 class="modal-title">UPDATE PRODUCT</h3>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-2"></div>
@@ -24,15 +18,15 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-input" id="name" placeholder="Eg: iphone 11" name="name"
                                    value="<?= $product->name ?>">
-                            <p class="error" id="err-name-product">Name is required!</p>
+                            <p class="error" id="err-name-update-product"></p>
                         </div>
 
                         <div class="form-group">
                             <label for="price" class="form-label">Price</label>
                             <input type="number" class="form-input" id="price" placeholder="Eg: 50000" name="price"
-                                   step="0.01" min="0"
+                                   min="0"
                                    value="<?= $product->price ?>">
-                            <p class="error" id="err-price-product">Price is required!</p>
+                            <p class="error" id="err-price-update-product"></p>
                         </div>
 
                         <div class="form-group">
@@ -48,14 +42,12 @@
                                 }
                                 ?>
                             </select>
-                            <p class="error" id="err-select-product">Category is required!</p>
+                            <p class="error" id="err-select-update-product">Category is required!</p>
                         </div>
 
                         <div class="form-group">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-input" id="image" name="image"
-                                   onchange="PreviewImage();">
-                            <p class="error" id="err-image-product">Image is required!</p>
+                            <input type="file" class="form-input" id="image" name="image" onchange="PreviewImage();">
                         </div>
                         <img id="upload-preview" style="width: 100px; height: 100px;" src="<?= $product->image ?>"/>
 
@@ -71,19 +63,7 @@
                         <span class="glyphicon glyphicon-remove"></span> Close
                     </button>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>
-<script type="text/javascript">
-
-    function PreviewImage() {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("image").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("upload-preview").src = oFREvent.target.result;
-        };
-    };
-
-</script>

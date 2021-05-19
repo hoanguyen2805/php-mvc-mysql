@@ -235,21 +235,6 @@ function validateFormResetPassword() {
     }
 }
 
-/**
- *
- * Hoa
- * Created at 27-04-2021 08h:50
- * click open menu on mobi
- *
- */
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
-}
 
 /**
  *
@@ -312,38 +297,45 @@ function validateFormAddProduct() {
  *
  */
 function validateFormUpdateProduct() {
-    let name = document.forms["form_update_product"]["name"].value;
+    let name = document.forms["form_update_product"]["name"].value.trim();
     let price = document.forms["form_update_product"]["price"].value;
-    let category = document.forms["form_update_product"]["category"].value;
-    // let regex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/;
+
+    let errName = document.getElementById("err-name-update-product");
+    let errPrice = document.getElementById("err-price-update-product");
+
     let check = true;
+
     if (name == "" || name == null) {
-        document.getElementById("err-name-product").style.display = "block";
+        errName.style.display = "block";
+        errName.innerText = "Name is required!";
+        document.forms["form_update_product"]["name"].style.border = "1px solid red";
+        check = false;
+    } else if (name.length < 4 || name.length > 255) {
+        errName.style.display = "block";
+        errName.innerText = "Please input the Name between 4 and 255 characters!";
+        document.forms["form_update_product"]["name"].style.border = "1px solid red";
         check = false;
     } else {
-        document.getElementById("err-name-product").style.display = "none";
-    }
-    if (price == "" || price == null || isNaN(price)) {
-        document.getElementById("err-price-product").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-price-product").style.display = "none";
-    }
-    if (category == "" || category == null) {
-        document.getElementById("err-select-product").style.display = "block";
-        check = false;
-    } else {
-        document.getElementById("err-select-product").style.display = "none";
+        errName.style.display = "none";
+        document.forms["form_update_product"]["name"].style.border = "0";
     }
 
+    if (isNaN(price)) {
+        errPrice.style.display = "block";
+        errPrice.innerText = "Price not valid!";
+        document.forms["form_update_product"]["price"].style.border = "1px solid red";
+        check = false;
+    } else if (price > 2147483647 || price < 0) {
+        errPrice.style.display = "block";
+        errPrice.innerText = "Please input the Price between >= 0 and <= 2147483647";
+        document.forms["form_update_product"]["price"].style.border = "1px solid red";
+        check = false;
+    } else {
+        errPrice.style.display = "none";
+        document.forms["form_update_product"]["price"].style.border = "0";
+    }
+    console.log(price);
     if (check == false) {
         return check;
     }
-    // if (check) {
-    //     if (!regex.test(name)) {
-    //         alert("Please do not enter following special characters in the name field");
-    //         check = false;
-    //         return check;
-    //     }
-    // }
 }

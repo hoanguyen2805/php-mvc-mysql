@@ -194,7 +194,7 @@ class ProductModel
         }
         $index = ($page - 1) * 5;
         $sql = "SELECT product.*, category.name AS category_name FROM product 
-        INNER JOIN category ON product.category_id = category.category_id LIMIT $index, 5";
+        INNER JOIN category ON product.category_id = category.category_id ORDER BY product.product_id ASC LIMIT $index, 5";
         $this->db->setQuery($sql);
         $products = $this->db->loadAllRows();
         if ($products == null) {
@@ -235,26 +235,24 @@ class ProductModel
     public function validateUpdateProduct($name, $price, $category)
     {
         $check = true;
-        $err = "";
+        $err = "Error! ";
         if ($name == "") {
-            $err = $err . "Name is required. ";
+            $err = $err . "Name is required.\n";
+            $check = false;
+        } elseif (strlen($name) < 4 || strlen($name) > 255) {
+            $err = $err . "Please input the Name filed between 4 and 255 characters!\n";
             $check = false;
         }
-        /*$regex = preg_match('/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/', $name);
-        if (!$regex) {
-            $err = $err . "The name cannot contain special characters. ";
+
+        if (!is_numeric($price)) {
+            $err = $err . "Price not valid!\n";
             $check = false;
-        }*/
-        if ($price == "" || !is_numeric($price)) {
-            $err = $err . "Price is required. ";
-            $check = false;
-        }
-        if ($price < 0) {
-            $err = $err . "Price must be greater than or equal to 0. ";
+        } elseif ($price < 0 || $price > 2147483647) {
+            $err = $err . "Please input the Price between >= 0 and <= 2147483647!\n";
             $check = false;
         }
         if ($category == "") {
-            $err = $err . "Category is required. ";
+            $err = $err . "Category is required!";
             $check = false;
         }
         if ($check == false) {
@@ -282,7 +280,7 @@ class ProductModel
         $product = $this->db->loadRow();
         if ($_FILES['image']['name'] == "") {
             // khong update image
-            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category WHERE product_id = $product->id";
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category WHERE product_id = $product->product_id";
             $this->db->setQuery($sql_update);
             $this->db->execute();
         } else {
@@ -292,7 +290,7 @@ class ProductModel
                 return false;
             }
             $newProduct[3] = $urlImage;
-            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category, image = '$urlImage' WHERE product_id = $product->id";
+            $sql_update = "UPDATE product SET name = '$newName', price = $price, category_id = $category, image = '$urlImage' WHERE product_id = $product->product_id";
             $this->db->setQuery($sql_update);
             $this->db->execute();
             File::deleteImage(trim($product->image));
