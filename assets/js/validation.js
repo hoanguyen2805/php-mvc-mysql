@@ -140,10 +140,10 @@ function validateFormSignUp() {
  *
  */
 function validateFormLogin() {
-    let username = document.forms["login_form"]["username"].value;
-    let password = document.forms["login_form"]["password"].value;
+    let username = document.forms["login_form"]["username"].value.trim();
+    let password = document.forms["login_form"]["password"].value.trim();
     let check = true;
-    if (username.trim() == "" || username == null) {
+    if (username == "" || username == null) {
         document.getElementById("err-login-username").style.display = "block";
         document.forms["login_form"]["username"].style.borderColor = "red";
         check = false;
@@ -173,7 +173,7 @@ function validateFormLogin() {
  *
  */
 function validateFormForgotPassword() {
-    let email = document.forms["forgot_form"]["email"].value;
+    let email = document.forms["forgot_form"]["email"].value.trim();
     let check = true;
     if (email == "" || email == null) {
         document.getElementById("err-email-forgot").style.display = "block";
@@ -195,8 +195,8 @@ function validateFormForgotPassword() {
  *
  */
 function validateFormResetPassword() {
-    let password = document.forms["reset_form"]["password"].value;
-    let confirmPassword = document.forms["reset_form"]["password_confirm"].value;
+    let password = document.forms["reset_form"]["password"].value.trim();
+    let confirmPassword = document.forms["reset_form"]["password_confirm"].value.trim();
     let errPasswordReset = document.getElementById("err-password-reset");
     let errConfirmPasswordReset = document.getElementById("err-password-reset-confirm");
     let check = true;
