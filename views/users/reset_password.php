@@ -2,7 +2,7 @@
     <div class="container_w">
         <div class="row">
             <div class="col">
-                <div class="login-form__header">
+                <div class="reset-password__header">
                     <h1>RESET PASSWORD</h1>
                     <?php
                     if (isset($notify)) {

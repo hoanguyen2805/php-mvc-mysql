@@ -9,7 +9,7 @@
         width: 80%;
     }
 
-    .sign-up-form .col {
+    .sign-up-form .col, .add-product .col {
         width: 70%;
     }
 }
@@ -19,7 +19,7 @@
         width: 85%;
     }
 
-    .sign-up-form .col {
+    .sign-up-form .col, .add-product .col {
         width: 75%;
     }
 }
@@ -62,7 +62,7 @@
         width: 100%;
     }
 
-    .sign-up-form .col {
+    .sign-up-form .col, .add-product .col {
         width: 100%;
     }
 }

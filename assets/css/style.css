@@ -109,13 +109,13 @@ select {
     flex-direction: column;
 }
 
-.login-form__header {
+.login-form__header, .manage-product__header, .manage-user__header, .reset-password__header {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     margin: 30px auto;
 }
 
-.login-form__header h1 {
+.login-form__header h1, .manage-product__header h1, .manage-user__header h1, .reset-password__header h1{
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 15px;
@@ -186,13 +186,13 @@ select {
     flex-direction: column;
 }
 
-.sign-up-form__header {
+.sign-up-form__header, .add-product__header {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     margin: 30px auto;
 }
 
-.sign-up-form__header h1 {
+.sign-up-form__header h1, .add-product__header h1 {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 15px;
@@ -258,21 +258,14 @@ select {
     outline: none;
 }
 
-.sign-up-error {
-    color: red;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.signup-already {
+.sign-up-form__already {
     text-align: center;
     color: #363a40;
     font-size: 13px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.signup-already-link {
+.sign-up-form__already--link {
     color: #4c6ef4;
     text-decoration: none;
 }
@@ -430,13 +423,15 @@ select {
     display: table;
 }
 
-.manage-user .col:nth-of-type(3){
+.manage-user .col:nth-of-type(3) {
     overflow-x: auto;
 }
-.divTable.blueTable .divTableBody .divTableCell img{
+
+.divTable.blueTable .divTableBody .divTableCell img {
     display: block;
     margin: 0 auto;
 }
+
 div.blueTable {
     border: 0px solid #1C6EA4;
     background-color: #EEEEEE;
@@ -552,16 +547,19 @@ div.blueTable {
 /* END MANAGE USER */
 
 /* START MANAGE PRODUCT */
-.manage-product .row{
+.manage-product .row {
     flex-direction: column;
 }
-.manage-product .col:nth-of-type(3){
+
+.manage-product .col:nth-of-type(3) {
     overflow-x: auto;
 }
-.manage-product .divTable.blueTable{
+
+.manage-product .divTable.blueTable {
     min-width: 660px;
 }
-.manage-product__add{
+
+.manage-product__add {
     background-color: #2196F3;
     color: white;
     font-weight: bold;
@@ -576,16 +574,18 @@ div.blueTable {
     border-radius: 8px;
     font-family: Arial, Helvetica, sans-serif;
 }
-.manage-product__add:hover{
+
+.manage-product__add:hover {
     background-color: #0b7dda;
     text-decoration: none;
-    color:white;
+    color: white;
 }
+
 /* END MANAGE PRODUCT */
 
 
 /* START UPDATE PRODUCT */
-.modal-title{
+.modal-title {
     font-size: 28px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -595,13 +595,15 @@ div.blueTable {
 /* END UPDATE PRODUCT */
 
 /* START ADD PRODUCT */
-.add-product .row{
+.add-product .row {
     flex-direction: column;
 }
-.add-product .col{
+
+.add-product .col {
     width: 50%;
     margin: 0 auto;
 }
+
 /* END ADD PRODUCT */
 .blueTable .tableFootStyle .links a.page-active {
     background: tomato;

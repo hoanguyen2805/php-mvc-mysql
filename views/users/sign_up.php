@@ -69,8 +69,8 @@
                         </div>
                         <button type="submit" class="form-submit" name="sign_up">Sign up</button>
                     </form>
-                    <p class="signup-already">Already have an account ?
-                        <a href="index.php?controller=users&action=sign-in" class="signup-already-link">
+                    <p class="sign-up-form__already">Already have an account ?
+                        <a href="index.php?controller=users&action=sign-in" class="sign-up-form__already--link">
                             Login
                         </a>
                     </p>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <div class="user-info__header">
-                    <h1>User Information</h1>
+                    <h1>USER INFORMATION</h1>
                     <?php
                     if (isset($notify)) {
                         ?>

@@ -2,7 +2,7 @@
     <div class="container-fluid-w">
         <div class="row">
             <div class="col">
-                <div class="login-form__header">
+                <div class="manage-user__header">
                     <h1>MANAGE USER</h1>
                 </div>
             </div>

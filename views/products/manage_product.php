@@ -2,7 +2,7 @@
     <div class="container-fluid-w">
         <div class="row">
             <div class="col">
-                <div class="login-form__header">
+                <div class="manage-product__header">
                     <h1>MANAGE PRODUCT</h1>
                     <?php
                     if (isset($notify)) {

@@ -2,7 +2,7 @@
     <div class="container-w">
         <div class="row">
             <div class="col">
-                <div class="sign-up-form__header">
+                <div class="add-product__header">
                     <h1>ADD PRODUCT</h1>
                     <?php
                     if (isset($notify)) {
@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <!---->
-                <div class="sign-up-form__content">
+                <div class="add-product__content">
                     <form action="index.php?controller=products&action=add-product-form"
                           autocomplete="off"
                           method="post"
