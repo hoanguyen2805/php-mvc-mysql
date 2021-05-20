@@ -21,11 +21,11 @@ function myFunction() {
  * Preview Image - update product
  *
  */
-function PreviewImage() {
-    var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("image").files[0]);
+function PreviewImage(id) {
+    let oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById(`image-${id}`).files[0]);
 
     oFReader.onload = function (oFREvent) {
-        document.getElementById("upload-preview").src = oFREvent.target.result;
+        document.getElementById(`upload-preview-${id}`).src = oFREvent.target.result;
     };
 };

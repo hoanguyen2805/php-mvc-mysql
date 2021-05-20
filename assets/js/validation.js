@@ -306,46 +306,44 @@ function validateFormAddProduct() {
  * validate for form update product
  *
  */
-function validateFormUpdateProduct() {
-    let name = document.forms["form_update_product"]["name"].value.trim();
-    let price = document.forms["form_update_product"]["price"].value.trim();
-
-    let errName = document.getElementById("err-name-update-product");
-    let errPrice = document.getElementById("err-price-update-product");
+function validateFormUpdateProduct(id) {
+    let name = document.forms["form_update_product_" + id]["name"].value.trim();
+    let price = document.forms["form_update_product_" + id]["price"].value.trim();
+    let errName = document.getElementById("err-name-update-product-" + id);
+    let errPrice = document.getElementById("err-price-update-product-" + id);
 
     let check = true;
 
     if (name == "" || name == null) {
         errName.style.display = "block";
         errName.innerText = "Name is required!";
-        document.forms["form_update_product"]["name"].style.border = "1px solid red";
+        document.forms["form_update_product_" + id]["name"].style.border = "1px solid red";
         check = false;
     } else if (name.length < 4 || name.length > 255) {
         errName.style.display = "block";
         errName.innerText = "Please input the Name between 4 and 255 characters!";
-        document.forms["form_update_product"]["name"].style.border = "1px solid red";
+        document.forms["form_update_product_" + id]["name"].style.border = "1px solid red";
         check = false;
     } else {
         errName.style.display = "none";
-        document.forms["form_update_product"]["name"].style.border = "0";
+        document.forms["form_update_product_" + id]["name"].style.border = "0";
     }
 
     if (isNaN(price) || price == "") {
         errPrice.style.display = "block";
         errPrice.innerText = "Price not valid!";
-        document.forms["form_update_product"]["price"].style.border = "1px solid red";
+        document.forms["form_update_product_" + id]["price"].style.border = "1px solid red";
         check = false;
     } else if (price > 2147483647 || price < 0) {
         errPrice.style.display = "block";
         errPrice.innerText = "Please input the Price between >= 0 and <= 2147483647";
-        document.forms["form_update_product"]["price"].style.border = "1px solid red";
+        document.forms["form_update_product_" + id]["price"].style.border = "1px solid red";
         check = false;
     } else {
         errPrice.style.display = "none";
-        document.forms["form_update_product"]["price"].style.border = "0";
+        document.forms["form_update_product_" + id]["price"].style.border = "0";
     }
 
-    console.log("chay vao day" + check);
     if (check == false) {
         return check;
     }

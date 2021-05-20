@@ -1,11 +1,11 @@
-<div class="modal fade" id="update_modal_<?= $product->product_id ?>" aria-hidden="true">
+<div class="modal fade" id="update-modal-<?= $product->product_id ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="index.php?controller=products&action=update-product-form&old=<?= $product->name ?>"
                   autocomplete="off"
                   method="post"
-                  enctype="multipart/form-data" name="form_update_product"
-                  onsubmit="return validateFormUpdateProduct()">
+                  enctype="multipart/form-data" name="form_update_product_<?= $product->product_id ?>"
+                  onsubmit="return validateFormUpdateProduct(<?= $product->product_id ?>)">
                 <div class="modal-header">
                     <h3 class="modal-title">UPDATE PRODUCT</h3>
                 </div>
@@ -18,7 +18,7 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-input" id="name" placeholder="Eg: iphone 11" name="name"
                                    value="<?= $product->name ?>">
-                            <p class="error" id="err-name-update-product"></p>
+                            <p class="error" id="err-name-update-product-<?= $product->product_id ?>"></p>
                         </div>
 
                         <div class="form-group">
@@ -26,7 +26,7 @@
                             <input type="number" class="form-input" id="price" placeholder="Eg: 50000" name="price"
                                    min="0"
                                    value="<?= $product->price ?>">
-                            <p class="error" id="err-price-update-product"></p>
+                            <p class="error" id="err-price-update-product-<?= $product->product_id ?>"></p>
                         </div>
 
                         <div class="form-group">
@@ -42,14 +42,17 @@
                                 }
                                 ?>
                             </select>
-                            <p class="error" id="err-select-update-product">Category is required!</p>
+                            <p class="error" id="err-select-update-product-<?= $product->product_id ?>">Category is
+                                required!</p>
                         </div>
 
                         <div class="form-group">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-input" id="image" name="image" onchange="PreviewImage();">
+                            <input type="file" class="form-input" id="image-<?= $product->product_id ?>" name="image"
+                                   onchange="PreviewImage(<?= $product->product_id ?>);">
                         </div>
-                        <img id="upload-preview" style="width: 100px; height: 100px;" src="<?= $product->image ?>"/>
+                        <img id="upload-preview-<?= $product->product_id ?>" style="width: 100px; height: 100px;"
+                             src="<?= $product->image ?>"/>
 
                         <!-- END -->
                     </div>

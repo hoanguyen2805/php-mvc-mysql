@@ -59,7 +59,7 @@
                                                aria-hidden="true"></i> DELETE
                                         </a>
                                         <button class="btn btn-warning" data-toggle="modal" type="button"
-                                                data-target="#update_modal_<?= $product->product_id ?>"><span
+                                                data-target="#update-modal-<?= $product->product_id ?>"><span
                                                     class="glyphicon glyphicon-edit"></span> Edit
                                         </button>
                                     </div>
