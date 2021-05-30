@@ -58,9 +58,11 @@
                         </div>
                         <button type="submit" class="form-submit" name="add_product">ADD</button>
                     </form>
-                </div>
+                    <!---->
 
-                <!---->
+
+                    <!---->
+                </div>
             </div>
         </div>
     </div>

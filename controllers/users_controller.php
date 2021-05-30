@@ -29,7 +29,8 @@ class UsersController extends BaseController
     public function __call($method, $arguments)
     {
         // TODO: Implement __call() method.
-        if (method_exists($this, $method)) {
+        if (method_exists($this, $method))
+        {
             // chưa login thì không được truy cập
             if (in_array($method, ['info', 'listUsers', 'formSearch', 'deleteUser']) && !$this->isLogin()) {
                 header("location:index.php?controller=users&action=sign-in");

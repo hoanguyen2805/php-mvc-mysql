@@ -26,12 +26,12 @@
                 <div class="divTable blueTable">
                     <div class="divTableHeading">
                         <div class="divTableRow">
-                            <div class="divTableHead">ID</div>
-                            <div class="divTableHead">Image</div>
-                            <div class="divTableHead">Name</div>
-                            <div class="divTableHead">Price</div>
-                            <div class="divTableHead">Category</div>
-                            <div class="divTableHead">Action</div>
+                            <div class="divTableHead" style="width: 5%">ID</div>
+                            <div class="divTableHead" style="width: 10%">Image</div>
+                            <div class="divTableHead" style="width: 35%">Name</div>
+                            <div class="divTableHead" style="width: 15%">Price</div>
+                            <div class="divTableHead" style="width: 15%">Category</div>
+                            <div class="divTableHead" style="width: 15%%;">Action</div>
                         </div>
                     </div>
                     <div class="divTableBody">
@@ -44,13 +44,17 @@
                                         <?= $product->product_id ?>
                                     </div>
                                     <div class="divTableCell">
-                                        <img src="<?= $product->image ?>" alt="" width="60px">
+                                        <img src="<?= $product->image ?>" alt="" onclick="showModalImg(this)">
                                     </div>
-                                    <div class="divTableCell"><?= $product->name ?></div>
+                                    <div class="divTableCell">
+                                        <span class="text-content"><?= $product->name ?></span>
+                                    </div>
                                     <div class="divTableCell">
                                         <?= number_format("$product->price", 0, ",", " ") ?> đ
                                     </div>
-                                    <div class="divTableCell"><?= $product->category_name ?></div>
+                                    <div class="divTableCell">
+                                        <?= $product->category_name ?>
+                                    </div>
                                     <div class="divTableCell">
                                         <a href="index.php?controller=products&action=delete&id=<?= $product->product_id ?>"
                                            onClick="return confirm('Are you sure you want to delete this product?');"
@@ -62,11 +66,13 @@
                                                 data-target="#update-modal-<?= $product->product_id ?>"><span
                                                     class="glyphicon glyphicon-edit"></span> Edit
                                         </button>
-                                    </div>
 
+                                    </div>
+                                    <?php
+                                    include 'views/products/update.php';
+                                    ?>
                                 </div>
                                 <?php
-                                include 'views/products/update.php';
                             }
                         }
                         ?>
@@ -104,6 +110,9 @@
             </div>
         </div>
     </div>
+    <div id="myModalImg" class="modal-img">
+        <span class="close-img">&times;</span>
+        <img class="modal-content__img" id="img01">
+        <div id="caption"></div>
+    </div>
 </section>
-
-

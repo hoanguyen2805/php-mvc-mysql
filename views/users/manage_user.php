@@ -16,13 +16,13 @@
                 <div class="divTable blueTable">
                     <div class="divTableHeading">
                         <div class="divTableRow">
-                            <div class="divTableHead">ID</div>
-                            <div class="divTableHead">Avatar</div>
-                            <div class="divTableHead">Full Name</div>
-                            <div class="divTableHead">Email</div>
-                            <div class="divTableHead">Username</div>
-                            <div class="divTableHead">Birthday</div>
-                            <div class="divTableHead">Action</div>
+                            <div class="divTableHead" style="width: 5%">ID</div>
+                            <div class="divTableHead" style="width: 10%">Avatar</div>
+                            <div class="divTableHead" style="width: 20%">Full Name</div>
+                            <div class="divTableHead" style="width: 20%">Email</div>
+                            <div class="divTableHead" style="width: 15%">Username</div>
+                            <div class="divTableHead" style="width: 15%">Birthday</div>
+                            <div class="divTableHead" style="width: 15%;">Action</div>
                         </div>
                     </div>
                     <div class="divTableBody">
@@ -33,10 +33,14 @@
                                 <div class="divTableRow">
                                     <div class="divTableCell"><?= $user->user_id ?></div>
                                     <div class="divTableCell">
-                                        <img src="<?= $user->avatar ?>" alt="" width="30px">
+                                        <img src="<?= $user->avatar ?>" alt="" onclick="showModalImg(this)">
                                     </div>
-                                    <div class="divTableCell"><?= $user->full_name ?></div>
-                                    <div class="divTableCell"><?= $user->email ?></div>
+                                    <div class="divTableCell">
+                                        <?= $user->full_name ?>
+                                    </div>
+                                    <div class="divTableCell">
+                                        <?= $user->email ?>
+                                    </div>
                                     <div class="divTableCell"><?= $user->username ?></div>
                                     <div class="divTableCell"><?= $user->birth_day ?></div>
                                     <div class="divTableCell">
@@ -92,5 +96,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="myModalImg" class="modal-img">
+        <span class="close-img">&times;</span>
+        <img class="modal-content__img" id="img01">
+        <div id="caption"></div>
     </div>
 </section>
